@@ -13,7 +13,7 @@ do
 done
 
 
-echo $vertical
+#echo $vertical
 
 
 
@@ -44,7 +44,8 @@ else
   then
     xsetwacom --set "$STYLUS" MapToOutput HEAD-0
   else
-    xsetwacom --set "$STYLUS" MapToOutput "$SUBSCREEN_WIDTH"x"$SUBSCREEN_HEIGHT"+2300+1240
+    xsetwacom --set "$STYLUS" MapToOutput HEAD-0
+    #xsetwacom --set "$STYLUS" MapToOutput "$SUBSCREEN_WIDTH"x"$SUBSCREEN_HEIGHT"+2300+1240
   fi
 fi
 
