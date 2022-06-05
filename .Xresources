@@ -28,14 +28,16 @@ XTerm*cursorBlink:              true
 ! Dont allow mouse ops - it can be enabled in the view Menu at runtime.
 ! The reason is it breaks copy/paste if an application requests mouse events,
 ! because the application gets the event instead of XTerm.
-XTerm*allowMouseOps:            false
+!XTerm*allowMouseOps:            false
 
 ! Dont change my title by default, this can be re-enabled from the menu.
-XTerm*allowTitleOps:            false
-XTerm*allowFontOps:             false
+!XTerm*allowTitleOps:            false
+!XTerm*allowFontOps:             false
 
 ! Mouse cursor configuration, I prefer to keep it simple.
-XTerm*pointerColor:             white
+!XTerm*pointerColor:             white
+!XTerm*pointerColor:             red
+XTerm*pointerColor:             gold
 XTerm*pointerColorBackground:   black
 XTerm*pointerShape:             left_ptr
 
@@ -90,13 +92,13 @@ XTerm*Form.menubar.vertDistance: 0
 !XTerm*Form.menubar.Thickness:  0
 
 ! Fonts
-XTerm*vt100.faceName:           xft:Consolas:size=18:antialias=true:style=Regular
-XTerm*vt100.boldFont:           xft:Consolas:size=18:antialias=true:style=Bold
+XTerm*vt100.faceName:           xft:Consolas:size=8:antialias=true:style=Regular
+XTerm*vt100.boldFont:           xft:Consolas:size=8:antialias=true:style=Bold
 
 ! Size and Title
 XTerm*vt100.geometry:           100x30
 XTerm*title:                    Terminal
-XTerm*iconHint:                 /home/taviso/.icons/computer_x11.xpm
+!XTerm*iconHint:                 /home/taviso/.icons/computer_x11.xpm
 
 ! Terminal Colors
 XTerm*vt100.background:     #212121
