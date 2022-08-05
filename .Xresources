@@ -21,9 +21,19 @@ XTerm*highlightThickness:       0
 ! Dont automatically jump to the bottom on output, but do on keypress.
 XTerm*scrollTtyOutput:          false
 XTerm*scrollKey:                true
-XTerm*scrollBar:                false
+!XTerm*scrollBar:                false
 XTerm*eightBitInput:            false
 XTerm*cursorBlink:              true
+
+! turn on scrollbar
+XTerm*scrollBar:          true
+XTerm*rightScrollBar:     true
+
+! allow drag scrollbar with left mouse button
+XTerm*VT100.scrollbar.translations:  #override \n\
+              <Btn1Down>:     StartScroll(Continuous) MoveThumb() NotifyThumb() \n\
+              <Btn1Motion>:   MoveThumb() NotifyThumb() \n\
+              <BtnUp>:        NotifyScroll(Proportional) EndScroll()
 
 ! Dont allow mouse ops - it can be enabled in the view Menu at runtime.
 ! The reason is it breaks copy/paste if an application requests mouse events,
@@ -170,3 +180,5 @@ XTerm*vt100.translations:   #override           \n\
   ! Ctrl <Btn4Up>:          larger-vt-font()    \n\
   ! Ctrl <Btn5Up>:          smaller-vt-font()   \n\
     ^<Key>I:                string("\014")      \n\
+    Shift Ctrl <Key> C: copy-selection(CLIPBOARD) \n\
+    Shift Ctrl <Key> V: insert-selection(CLIPBOARD)
