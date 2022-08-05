@@ -1,3 +1,8 @@
+"More posix compliant shell than fish
+if &shell =~# 'fish$'
+    set shell=sh
+endif
+
 "plugins
 call plug#begin('~/.vim/plugged')
  " Plugin Section
@@ -15,6 +20,7 @@ call plug#begin('~/.vim/plugged')
  Plug 'deris/vim-shot-f'
  Plug 'yggdroot/indentline'
  Plug 'norcalli/nvim-colorizer.lua'
+ Plug 'blankname/vim-fish'
 call plug#end()
 
 " color schemes
