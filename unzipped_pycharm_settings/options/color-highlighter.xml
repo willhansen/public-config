@@ -1,0 +1,9 @@
+<application>
+  <component name="Color Highlighter Settings">
+    <option name="rgbaEnabled" value="true" />
+    <option name="textEnabled" value="true" />
+    <option name="isRgbaEnabled" value="true" />
+    <option name="isTextEnabled" value="true" />
+    <option name="version" value="11.0.0" />
+  </component>
+</application>

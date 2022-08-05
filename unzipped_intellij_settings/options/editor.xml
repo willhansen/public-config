@@ -1,6 +1,26 @@
 <application>
+  <component name="CodeVisionSettings">
+    <option name="codeVisionGroupToPosition">
+      <map>
+        <entry key="inheritors" value="Default" />
+        <entry key="problems" value="Default" />
+        <entry key="references" value="Default" />
+        <entry key="vcs.code.vision" value="Default" />
+      </map>
+    </option>
+  </component>
   <component name="EditorSettings">
     <option name="USE_SOFT_WRAPS" value="MAIN_EDITOR" />
     <option name="SOFT_WRAP_FILE_MASKS" value="*" />
+  </component>
+  <component name="InlayHintsSettings">
+    <option name="lastViewedProviderKeyId" value="Rust.parameter.hints.old" />
+    <settingsMapElement>
+      <Rust.rust.type.hints>
+        <Settings>
+          <option name="showObviousTypes" value="true" />
+        </Settings>
+      </Rust.rust.type.hints>
+    </settingsMapElement>
   </component>
 </application>
