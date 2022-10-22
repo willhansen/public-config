@@ -21,6 +21,7 @@ call plug#begin('~/.vim/plugged')
  Plug 'yggdroot/indentline'
  Plug 'norcalli/nvim-colorizer.lua'
  Plug 'blankname/vim-fish'
+ Plug 'habamax/vim-godot'
 call plug#end()
 
 " color schemes
