@@ -6,22 +6,11 @@ endif
 "plugins
 call plug#begin('~/.vim/plugged')
  " Plugin Section
- Plug 'dracula/vim'
- Plug 'morhetz/gruvbox'
- Plug 'neoclide/coc.nvim', {'branch': 'release'}
- " Plug 'machakann/vim-sandwich'
  Plug 'tpope/vim-commentary'
- Plug 'kyazdani42/nvim-web-devicons'
- "Plug 'beauwilliams/statusline.lua'
- "Plug 'famiu/feline.nvim'
- Plug 'hoob3rt/lualine.nvim'
  Plug 'chrisbra/changesPlugin'
- Plug 'ojroques/nvim-bufbar'
  Plug 'deris/vim-shot-f'
  Plug 'yggdroot/indentline'
  Plug 'norcalli/nvim-colorizer.lua'
- "Plug 'blankname/vim-fish'
- "Plug 'habamax/vim-godot'
 call plug#end()
 
 " color schemes
@@ -30,7 +19,6 @@ if (has("termguicolors"))
 endif
 syntax enable
 " colorscheme evening
-colorscheme dracula
 "let g:gruvbox_contrast_dark = 'hard'
 "colorscheme gruvbox
 
@@ -38,11 +26,6 @@ colorscheme dracula
 "set guifont=ProggyCleanTTCE\ Nerd\ Font\ Mono:h12
 set guifont=Fira\ Code:h10
 
-" lua configs
-lua require('config')
-
-" enable tab bar
-lua require('bufbar').setup {}
 
 "custom options
 set nocompatible            " disable compatibility to old-time vi
@@ -131,8 +114,6 @@ inoremap """<CR> """<CR><CR>"""<Up><Tab>
 " indentline plugin should not overwrite hidden color
 let g:indentLine_setColors = 0
 "let g:indentLine_defaultGroup = 'SpecialKey'
-
-lua require'colorizer'.setup()
 
 set foldmethod=indent   " fold based on indent
 set foldlevelstart=20
