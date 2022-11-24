@@ -1,0 +1,49 @@
+{
+    "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
+    "vscode-neovim.neovimInitVimPaths.linux": "/home/will/Documents/user_settings/vscode_init.vim",
+    "security.workspace.trust.untrustedFiles": "open",
+    "security.workspace.trust.enabled": false,
+    "editor.acceptSuggestionOnCommitCharacter": false,
+    "editor.acceptSuggestionOnEnter": "off",
+    "rust.cfg_test": true,
+    "rust.all_features": true,
+    "workbench.settings.openDefaultKeybindings": true,
+    "rust-client.engine": "rust-analyzer",
+    "editor.formatOnSave": true,
+    "editor.wordWrap": "on",
+    "workbench.colorTheme": "Monokai Dimmed",
+    "workbench.view.alwaysShowHeaderActions": true,
+    "vscode-neovim.highlightGroups.highlights": {
+        "Directory": "vim",
+        "IncSearch": {
+            "backgroundColor": "theme.editor.findMatchBackground",
+            "borderColor": "theme.editor.findMatchBorder"
+        },
+        "Search": {
+            "backgroundColor": "theme.editor.findMatchHighlightBackground",
+            "borderColor": "theme.editor.findMatchHighlightBorder"
+        },
+        "Visual": {
+            "backgroundColor": "theme.editor.selectionBackground"
+        },
+        "Conceal": "vim",
+        "Substitute": "vim"
+    },
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "editor.inlayHints.padding": true,
+    "rust-analyzer.inlayHints.bindingModeHints.enable": true,
+    "rust-analyzer.inlayHints.expressionAdjustmentHints.enable": "always",
+    "rust-analyzer.inlayHints.closureReturnTypeHints.enable": "always",
+    //"editor.inlayHints.fontFamily": "Courier New",
+    //"editor.inlayHints.fontSize": 11,
+    "workbench.colorCustomizations": {
+        // Name of the theme you are currently using
+        "[Monokai Dimmed]": {
+            "editorInlayHint.foreground": "#303030f0",
+            "editorInlayHint.background": "#00000048",
+            // Overrides for specific kinds of inlay hints
+            //"editorInlayHint.typeForeground": "#fdb6fdf0",
+            //"editorInlayHint.parameterForeground": "#fdb6fdf0",
+        }
+    }
+}
