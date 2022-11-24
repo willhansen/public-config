@@ -121,3 +121,10 @@ nnoremap <space> za     " let space toggle folds
 " set foldcolumn=2   " This one messes with vscodium formatting
 
 autocmd FileType xml setlocal shiftwidth=1 tabstop=1
+
+" More intuitive navigation over wrapped lines
+nnoremap j gj
+nnoremap k gk
+
+nnoremap gj j
+nnoremap gk k

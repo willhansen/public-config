@@ -32,8 +32,6 @@
     "terminal.integrated.enableMultiLinePasteWarning": false,
     "editor.inlayHints.padding": true,
     "rust-analyzer.inlayHints.bindingModeHints.enable": true,
-    "rust-analyzer.inlayHints.expressionAdjustmentHints.enable": "always",
-    "rust-analyzer.inlayHints.closureReturnTypeHints.enable": "always",
     //"editor.inlayHints.fontFamily": "Courier New",
     //"editor.inlayHints.fontSize": 11,
     "workbench.colorCustomizations": {
