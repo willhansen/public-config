@@ -1,6 +1,6 @@
 {
     "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
-    "vscode-neovim.neovimInitVimPaths.linux": "/home/will/Documents/user_settings/vscode_init.vim",
+    "vscode-neovim.neovimInitVimPaths.linux": "/home/will/Documents/user_settings/VSCodium/init.vim",
     "security.workspace.trust.untrustedFiles": "open",
     "security.workspace.trust.enabled": false,
     "editor.acceptSuggestionOnCommitCharacter": false,
@@ -37,7 +37,7 @@
     "workbench.colorCustomizations": {
         // Name of the theme you are currently using
         "[Monokai Dimmed]": {
-            "editorInlayHint.foreground": "#303030f0",
+            "editorInlayHint.foreground": "#3b3b3bf0",
             "editorInlayHint.background": "#00000048",
             // Overrides for specific kinds of inlay hints
             //"editorInlayHint.typeForeground": "#fdb6fdf0",
