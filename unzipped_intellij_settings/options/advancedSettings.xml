@@ -1,0 +1,10 @@
+<application>
+  <component name="AdvancedSettings">
+    <option name="settings">
+      <map>
+        <entry key="search.everywhere.wait.for.contributors" value="false" />
+        <entry key="show.line.bookmarks.in.popup" value="false" />
+      </map>
+    </option>
+  </component>
+</application>

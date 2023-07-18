@@ -1,4 +1,5 @@
-IdeaVIM
-PythonCore
 me.lensvol.blackconnect
 org.rust.lang
+IdeaVIM
+PythonCore
+izhangzhihao.rainbow.brackets
