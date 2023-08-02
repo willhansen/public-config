@@ -21,4 +21,5 @@ font:
 import:
   #- ~/.config/alacritty/themes/themes/gruvbox_dark.yaml
   #- ~/.config/alacritty/themes/themes/alabaster_dark.yaml
-  - ~/.config/alacritty/themes/themes/flat_remix.yaml
+  #- ~/.config/alacritty/themes/themes/flat_remix.yaml
+  - ~/.config/alacritty/themes/themes/ubuntu.yaml
