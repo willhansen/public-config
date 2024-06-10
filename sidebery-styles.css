@@ -1,0 +1,36 @@
+#root.root {--frame-bg: #b0b4c0;}
+#root.root {--bookmarks-inner-gap: 7px;}
+#root.root {--bookmarks-node-activated-fg: red;}
+#root.root {--bookmarks-margin: 0px;}
+#root.root {--bookmarks-indent: 16px;}
+#root.root {--scroll-color: black;}
+#root.root {--bookmarks-folder-height: 17px;}
+#root.root {--bookmarks-bookmark-height: 17px;}
+#root.root {--tabs-height: 17px;}
+#root.root {--tabs-margin: 0px;}
+#root.root {--tabs-normal-bg: #EEE;}
+#root.root {--tabs-border-radius: 15px;}
+#root.root {--tabs-activated-bg: black;}
+#root.root {--tabs-color-layer-opacity: 0.4;}
+#root.root {--tabs-lvl-opacity: 1.0;}
+#root.root {--tabs-activated-fg: white;}
+
+/* folder title */
+.BookmarkNode[data-type="folder"] > .body > .title { 
+color:royalblue;
+ }
+
+/* bookmark background */
+.BookmarkNode > .body { background-color:#EEE; }
+.BookmarkNode[data-expanded="true"] > .body  { background-color:royalblue; }
+
+/* folder background */
+/*.BookmarkNode[data-type="folder"] > .body { background-color:lightblue; }
+*/
+
+/* indent indicator line opacity */
+.BookmarkNode .children::before { opacity:1; }
+
+
+/* unloaded tabs */
+.Tab[data-discarded="true"] .body { background-color:#0000; }
