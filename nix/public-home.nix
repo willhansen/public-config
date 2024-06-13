@@ -69,7 +69,9 @@
         # g for global, a for append, terminal-overrides to describe functionality of terminal outside tmux
         set -ga terminal-overrides ",xterm-256color:Tc"
 
-        set -s set-clipboard on
+        # Override the default copy to clipboard method (didn't seem to work on gnome terminal)
+        set -s set-clipboard off 
+        bind-key -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe "xclip -selection clipboard -i" \; send -X clear-selection
       '';
     };
     neovim = {
