@@ -205,7 +205,9 @@ lazy.setup({
 
   {
     "folke/which-key.nvim",
-    event = "VeryLazy",
+    lazy = false,
+    priority = 900,
+    -- event = "VeryLazy",
     init = function()
       vim.o.timeout = true
       vim.o.timeoutlen = 300
@@ -248,9 +250,9 @@ lazy.setup({
   },
   {
     "folke/trouble.nvim",
-    -- lazy = false,
+    lazy = false,
     opts = {},
-    ft = "rust", -- load on filetype
+    -- ft = [ "rust", "bash" ], -- load on filetype
     -- cmd = "Trouble", -- load on command
     dependencies = { "nvim-tree/nvim-web-devicons" },
     keys = {
@@ -285,9 +287,9 @@ lazy.setup({
         desc = "Quickfix List (Trouble)",
       },
     },
-    init = function()
-      vim.diagnostic.config({virtual_text = false})
-    end
+    -- init = function()
+    --   vim.diagnostic.config({virtual_text = false})
+    -- end
   },
   
 
@@ -473,6 +475,7 @@ lazy.setup({
     -- show lsp errors under lines
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     opts = {},
+    enabled = false,
   },
   {
     -- highlight symbol under cursor
@@ -484,7 +487,11 @@ lazy.setup({
     "mrcjkb/rustaceanvim",
     version = '^4', -- Recommended
     lazy = false, -- load on startup
-    config = function(_, opts) 
+    -- config = function(_, opts) 
+    keys = { 
+        { "<leader>e" , function() vim.cmd.RustLsp('expandMacro') end, "Expand macros"}
+    },
+    init = function()
       vim.g.rustaceanvim = {
         server = {
           default_settings = {
@@ -505,10 +512,21 @@ lazy.setup({
   -- end of plugins
 })
 
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'sh',
+  callback = function()
+    vim.lsp.start({
+      name = 'bash-language-server',
+      cmd = { 'bash-language-server', 'start' },
+    })
+  end,
+})
 
 
 
 
+
+-- TODO: exclude non-edit windows, like the context lines
 go_to_next_window = function()
   local current_window = vim.fn.winnr()
   local total_windows = vim.fn.winnr('$')
@@ -528,6 +546,11 @@ vim.opt.expandtab = true
 
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+vim.opt.smartindent = true
+
+vim.opt.splitbelow = true -- Put new windows below current
+vim.opt.splitkeep = "screen"
+vim.opt.splitright = true -- Put new windows right of current
 
 -- scroll before cursor reaches edge of window
 vim.opt.scrolloff = 5
@@ -538,6 +561,9 @@ vim.opt.clipboard = 'unnamedplus'
 -- line numbers in left margin
 vim.opt.number = true
 
+vim.opt.winminwidth = 10 -- Minimum window width
+
+vim.opt.virtualedit = "block" -- Allow cursor to move where there is no text in visual block mode
 
 vim.g.mapleader = ' '
 -- vim.keymap.set({'n', 'x'}, '<leader>y', '"+y', {desc = "Yank to clipboard"})
@@ -548,8 +574,28 @@ vim.g.mapleader = ' '
 -- nmap("[d", vim.diagnostic.goto_prev, "Previous diagnostic")
 
 
-nvmap("k", "gk", "move up")
-nvmap("j", "gj", "move down")
+
+-- From LazyVim: https://www.lazyvim.org/configuration/general
+vim.keymap.set({"n", "x"}, "j",  "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, noremap = true, silent = true, })
+vim.keymap.set({"n", "x"}, "k",  "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, noremap = true, silent = true, })
+vim.keymap.set({"n", "x"}, "<Down>",  "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, noremap = true, silent = true, })
+vim.keymap.set({"n", "x"}, "<Up>",  "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, noremap = true, silent = true, })
+
+-- From LazyVim: https://www.lazyvim.org/configuration/general
+-- Add undo break-points
+vim.keymap.set("i", ",", ",<c-g>u", {noremap = true, silent = true })
+vim.keymap.set("i", ".", ".<c-g>u", {noremap = true, silent = true })
+vim.keymap.set("i", ";", ";<c-g>u", {noremap = true, silent = true })
+ 
+vim.keymap.set("n", "<leader>L", "<cmd>Lazy<cr>", { desc = "Lazy" })
+
+vim.keymap.set("n", "<leader>w", "<c-w>", { desc = "Windows", noremap = true, silent = true })
+
+-- From LazyVim: https://www.lazyvim.org/configuration/general
+-- better indenting
+vim.keymap.set("v", "<", "<gv")
+vim.keymap.set("v", ">", ">gv")
+
 
 nmap('U', "<cmd>redo<cr>", "Redo") 
 
@@ -568,7 +614,11 @@ nivmap("<C-s>", '<CMD> wa <CR>', "Save all buffers" )
 nmap('ge', 'G', "Go to end of file")
 nmap('gD', vim.lsp.buf.declaration, "Go to declaration")
 -- nmap('gd', vim.lsp.buf.definition, "Go to definition")
-nmap('<CR>', "<CMD> nohlsearch <CR> <CR>", "Remove search highlighting")
+
+vim.keymap.set({ "n" }, "<leader> R" , "<cmd>InspectTree<cr>", { desc = "Inspect treesitter tree " })
+
+vim.keymap.set({ "n" }, "<cr>", "<cmd>nohlsearch<cr> <cr>", { desc = "Enter and Clear hlsearch" })
+vim.keymap.set({ "n" }, "<esc>", "<cmd>nohlsearch<cr><esc>", { desc = "Escape and Clear hlsearch" })
 
 vim.keymap.set('v', 'R', '"_dP', {
   --noremap = true, 
@@ -649,11 +699,105 @@ vim.api.nvim_create_autocmd({"CursorHold", "CursorHoldI"}, {
 })
 ]]
 
--- Highlight on yank
-vim.api.nvim_create_autocmd("TextYankPost", {
-  pattern  = "*",
-  callback = function() vim.highlight.on_yank { timeout = 200 } end
-})
+-- -- Highlight on yank
+-- vim.api.nvim_create_autocmd("TextYankPost", {
+--   pattern  = "*",
+--   callback = function() vim.highlight.on_yank { timeout = 200 } end
+-- })
+--
+function autocommands()
+  local function augroup(name)
+    return vim.api.nvim_create_augroup("wrsh_autocommands_" .. name, { clear = true })
+  end
+  -- Highlight on yank
+  -- From LazyVim: https://www.lazyvim.org/configuration/general
+  vim.api.nvim_create_autocmd("TextYankPost", {
+    group = augroup("highlight_yank"),
+    callback = function()
+      vim.highlight.on_yank({ timeout = 150 })
+    end,
+  })
+
+  -- autoformat on save
+  vim.api.nvim_create_autocmd('BufWritePre', {
+    -- buffer = vim.fn.bufnr(),
+    group = augroup("autoformat "),
+    pattern = { "rust" };
+    callback = function() vim.lsp.buf.format({ timeout_ms = 3000 }) end
+  })
+
+  -- Check if we need to reload the file when it changed
+  -- From LazyVim: https://www.lazyvim.org/configuration/general
+  vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
+    group = augroup("checktime"),
+    callback = function()
+      if vim.o.buftype ~= "nofile" then
+        vim.cmd("checktime")
+      end
+    end,
+  })
+
+  -- resize splits if window got resized
+  -- From LazyVim: https://www.lazyvim.org/configuration/general
+  vim.api.nvim_create_autocmd({ "VimResized" }, {
+    group = augroup("resize_splits"),
+    callback = function()
+      local current_tab = vim.fn.tabpagenr()
+      vim.cmd("tabdo wincmd =")
+      vim.cmd("tabnext " .. current_tab)
+    end,
+  })
+
+  -- close some filetypes with <q>
+  -- From LazyVim: https://www.lazyvim.org/configuration/general
+  vim.api.nvim_create_autocmd("FileType", {
+    group = augroup("close_with_q"),
+    pattern = {
+      "PlenaryTestPopup",
+      "help",
+      "lspinfo",
+      "notify",
+      "qf",
+      "spectre_panel",
+      "startuptime",
+      "tsplayground",
+      "neotest-output",
+      "checkhealth",
+      "neotest-summary",
+      "neotest-output-panel",
+      "dbout",
+    },
+    callback = function(event)
+      vim.bo[event.buf].buflisted = false
+      vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+    end,
+  })
+
+  -- TODO: what does this do?
+  -- From LazyVim: https://www.lazyvim.org/configuration/general
+  -- make it easier to close man-files when opened inline
+  vim.api.nvim_create_autocmd("FileType", {
+    group = augroup("man_unlisted"),
+    pattern = { "man" },
+    callback = function(event)
+      vim.bo[event.buf].buflisted = false
+    end,
+  })
+
+  -- From LazyVim: https://www.lazyvim.org/configuration/general
+  -- wrap and check for spell in text filetypes
+  vim.api.nvim_create_autocmd("FileType", {
+    group = augroup("wrap_spell"),
+    pattern = { "*.txt", "*.tex", "*.typ", "gitcommit", "markdown" },
+    callback = function()
+      vim.opt_local.wrap = true
+      vim.opt_local.spell = true
+    end,
+  })
+
+end
+
+autocommands()
 
 -- J and K move selected lines
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
@@ -677,14 +821,6 @@ vim.opt.inccommand = 'split' -- better previews for substitue commands (`:s/ ...
 
 vim.lsp.inlay_hint.enable(true)
 
-function do_format() 
-		vim.lsp.buf.format({ timeout_ms = 3000 })
-end
 
--- autoformat on save
-vim.api.nvim_create_autocmd('BufWritePre', {
-	-- buffer = vim.fn.bufnr(),
-	callback = do_format
-})
 
-nmap('<leader>=', do_format, "Format file")
+nmap('<leader>=', function() vim.lsp.buf.format({ timeout_ms = 3000 }) end, "Format file")
