@@ -6,18 +6,23 @@
     shellAliases = {
         ".." = "cd ..";
         "..." = "cd ../..";
+        "cd ..." = "cd ../..";
         "...." = "cd ../../..";
+        "cd ...." = "cd ../../..";
         "....." = "cd ../../../..";
+        "cd ....." = "cd ../../../..";
         "......" = "cd ../../../../..";
+        "cd ......" = "cd ../../../../..";
 
         t = "task"; # for taskwarrior
+        savetasks = "pushd ~/.task && ./do_export.sh && git commit -am 'update' && git push && popd";
 
         mysudo = "sudo env \"PATH=$PATH\"";
         nv = "nvim";
         nd = "nix develop";
 
         l = "ls";
-        ll = "ls -l";
+        ll = "ls -lh";
         la = "ls -a";
         lla = "ll -a";
         lal = "lla";
@@ -29,9 +34,11 @@
         amend = "git commit --amend";
         # gitgraph = " git log --oneline --graph --decorate --all";
         gitgraph = "git log --graph --pretty=\"%C(#9a9600)%h %C(#1f95f3)%ar %C(#e65d62)%s \" --date=human";
-
         # gitg = "gitgraph";
         gg = "gitgraph";
+
+        # git diff, but without the +/- at line start
+        gitcleandiff = "git diff --output-indicator-{old,new,context}=' '";
 
         # update = "sudo nixos-rebuild switch";
         howbig = "du -hs * | sort -hr";
@@ -49,34 +56,52 @@
       sd # alternative to sed
       bat # alternative to less
       htop
+      atop
       nodePackages.bash-language-server
       graphviz
       xcolor # color picker
       comic-mono # TODO: get access to the font
       # font list: https://www.nerdfonts.com/font-downloads
+      #TODO: maybe only get specific fonts, because they are big
       # ( nerdfonts.override { fonts = [ "FiraCode" ]; }) 
       nerdfonts
+      sqlite
+      sqlitebrowser
+      meld # merge tool
+      jq #json parsing
+      stress #artificial pc load
     ];
   };
   fonts.fontconfig.enable = true;
-  programs = {
-    alacritty = {
+  services = {
+
+    flameshot = {
       enable = true;
       settings = {
-        font = {
-          normal.family = "ComicShannsMono Nerd Font Mono";
-          bold = {style = "Bold";};
-          size = 9;
-
+        General = {
+          showStartupLaunchMessage = false;
+          # flameshot does not support any sort of relative path or variable expansion
+          savePath="/home/will/Pictures/screenshots";
+          savePathFixed=true;
+          saveAfterCopy= true ;
+          predefinedColorPaletteLarge = true;
+          drawThickness=5;
+          filenamePattern="screenshot_%F_%H-%M";
+        };
+        Shortcuts = {
+          TYPE_MOVESELECTION="Q";
         };
       };
-
     };
+  };
+  programs = {
     taskwarrior = {
       enable = true;
+      package = pkgs.taskwarrior3;
       # theme here does not seem to work
-      colorTheme = "solarized-dark-256";
+      # colorTheme = "solarized-light-256";
       dataLocation = "$HOME/.task";
+      # config.hooks.location = "$HOME/.config/task/hooks";
       # extraConfig = "
       #   include solarized-dark-256.theme;
       # ";
@@ -122,6 +147,7 @@
         bind -n M-E split-window -h -c "#{pane_current_path}" # split left-right
         bind -n M-X resize-pane -Z # zoom pane
         bind -n M-W kill-pane
+        bind -n M-R respawn-pane -k # respawn pane, killing running processes
         bind -n M-N new-window -c "#{pane_current_path}" # new tab
         bind -n M-< command-prompt -I'#W' { rename-window -- '%%' } # rename
 
@@ -167,6 +193,54 @@
       '';
     };
     fzf = { enable = true; };
+
+    zsh = {
+      enable = true;
+      # TODO: fix
+      #syntaxHighlighting.enable = true;
+      history = {
+        extended = true;
+        save = 100000000; # 10M (10k default)
+        size = 100000000; # 10M (10k default)
+      };
+      historySubstringSearch.enable = true;
+      shellAliases = {
+        # l =
+        #   "exa --icons --grid --classify --color=auto --sort=type --group-directories-first --header --modified --created --git --binary --group";
+        # update = "sudo nixos-rebuild switch";
+      };
+      # TODO: need this?
+      #history = {
+      #size = 10000;
+      #path = "${config.xdg.dataHome}/zsh/history";
+      #};
+      oh-my-zsh = {
+        enable = true;
+        plugins = [ "git" ]; # "vi-mode" ];
+        # This is how to reference the directory the configuration file is in (or its readonly copy, at least)
+        # Note that the the folder must be checked in to git to be recognized by nix
+        #custom = builtins.toString ./. + "/${custom_zsh_dir}"; 
+        custom = "$HOME/${custom_zsh_dir}";
+        theme = "custom";
+        extraConfig = ''
+          # Skip only the aliases from the git plugin
+          zstyle ':omz:plugins:git' aliases no
+        '';
+      };
+      initExtra = ''
+        	# That reads "if $SSH_AUTH_SOCK is a socket (-S) and not a symbolic link (! -h), create a new symbolic link at the known path. In all cases, redefine SSH_AUTH_SOCK to point to the known path.
+
+        	# The ! -h avoids creating a circular reference if you run this multiple times.
+
+        	# Works great, but breaks when using remotely mounted home folders. In that case, use ~/.ssh/ssh_auth_sock_"$(hostname)" for your symlink. It will keep separate auth sockets for each host.
+
+        	local known_ssh_auth_sock_path=~/.ssh/ssh_auth_sock_"$(hostname)"
+        	if [ -S "$SSH_AUTH_SOCK" ] && [ ! -h "$SSH_AUTH_SOCK" ]; then
+            ln -sf "$SSH_AUTH_SOCK" "$known_ssh_auth_sock_path"
+        	fi
+        	export SSH_AUTH_SOCK="$known_ssh_auth_sock_path"
+        	'';
+    };
     bash = {
       enable = true;
       # historyControl = [ "ignorespace" ]; 
