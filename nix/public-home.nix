@@ -6,13 +6,9 @@
     shellAliases = {
         ".." = "cd ..";
         "..." = "cd ../..";
-        "cd ..." = "cd ../..";
         "...." = "cd ../../..";
-        "cd ...." = "cd ../../..";
         "....." = "cd ../../../..";
-        "cd ....." = "cd ../../../..";
         "......" = "cd ../../../../..";
-        "cd ......" = "cd ../../../../..";
 
         t = "task"; # for taskwarrior
         savetasks = "pushd ~/.task && ./do_export.sh && git commit -am 'update' && git push && popd";
@@ -21,6 +17,7 @@
         nv = "nvim";
         nd = "nix develop";
 
+        ls = "ls --color=auto";
         l = "ls";
         ll = "ls -lh";
         la = "ls -a";
@@ -63,8 +60,8 @@
       comic-mono # TODO: get access to the font
       # font list: https://www.nerdfonts.com/font-downloads
       #TODO: maybe only get specific fonts, because they are big
-      # ( nerdfonts.override { fonts = [ "FiraCode" ]; }) 
-      nerdfonts
+      ( nerdfonts.override { fonts = [ "FiraCode" ]; }) 
+      # nerdfonts
       sqlite
       sqlitebrowser
       meld # merge tool
@@ -220,8 +217,9 @@
         # This is how to reference the directory the configuration file is in (or its readonly copy, at least)
         # Note that the the folder must be checked in to git to be recognized by nix
         #custom = builtins.toString ./. + "/${custom_zsh_dir}"; 
-        custom = "$HOME/${custom_zsh_dir}";
-        theme = "custom";
+        # custom = "HOME/${custom_zsh_dir}";
+        # theme = "custom";
+        theme = "robbyrussell";
         extraConfig = ''
           # Skip only the aliases from the git plugin
           zstyle ':omz:plugins:git' aliases no
