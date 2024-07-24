@@ -219,7 +219,7 @@
         #custom = builtins.toString ./. + "/${custom_zsh_dir}"; 
         # custom = "HOME/${custom_zsh_dir}";
         # theme = "custom";
-        theme = "robbyrussell";
+        theme = "intheloop";
         extraConfig = ''
           # Skip only the aliases from the git plugin
           zstyle ':omz:plugins:git' aliases no
