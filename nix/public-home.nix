@@ -1,18 +1,23 @@
 
 { pkgs, ... }:
-{
-
+let custom_zsh_dir = ".custom_zsh_stuff";
+in {
   home = {
+
+    # This is how to copy a directory from the config folder to the home folder
+    file."${custom_zsh_dir}/themes/custom.zsh-theme".source =
+      ./custom.zsh-theme;
+
     shellAliases = {
         ".." = "cd ..";
         "..." = "cd ../..";
-        "cd ..." = "cd ../..";
+        # "cd ..." = "cd ../..";
         "...." = "cd ../../..";
-        "cd ...." = "cd ../../..";
+        # "cd ...." = "cd ../../..";
         "....." = "cd ../../../..";
-        "cd ....." = "cd ../../../..";
+        # "cd ....." = "cd ../../../..";
         "......" = "cd ../../../../..";
-        "cd ......" = "cd ../../../../..";
+        # "cd ......" = "cd ../../../../..";
 
         t = "task"; # for taskwarrior
         savetasks = "pushd ~/.task && ./do_export.sh && git commit -am 'update' && git push && popd";
@@ -63,8 +68,8 @@
       comic-mono # TODO: get access to the font
       # font list: https://www.nerdfonts.com/font-downloads
       #TODO: maybe only get specific fonts, because they are big
-      # ( nerdfonts.override { fonts = [ "FiraCode" ]; }) 
-      nerdfonts
+      ( nerdfonts.override { fonts = [ "ComicShannsMono" "FiraCode" ]; }) 
+      # nerdfonts
       sqlite
       sqlitebrowser
       meld # merge tool
@@ -95,6 +100,22 @@
     };
   };
   programs = {
+    git = {
+      enable = true;
+      extraConfig = {
+        push.autoSetupRemote = true;
+        init.defaultBranch = "main";
+        diff.tool = "meld";
+        difftool."meld" = {
+          cmd = "meld \"$LOCAL\" \"$REMOTE\"";
+        };
+        merge.tool = "meld";
+        mergetool."meld" = {
+          cmd = "meld \"$LOCAL\" \"$MERGED\" \"$REMOTE\" -o \"$MERGED\" --auto-merge";
+        };
+
+      };
+    };
     taskwarrior = {
       enable = true;
       package = pkgs.taskwarrior3;
@@ -163,10 +184,12 @@
         set -g default-terminal "tmux-256color"
         # g for global, a for append, terminal-overrides to describe functionality of terminal outside tmux
         set -ga terminal-overrides ",xterm-256color:Tc"
+        
+        set -g @plugin 'tmux-plugins/tmux-yank'
 
         # Override the default copy to clipboard method (didn't seem to work on gnome terminal)
-        set -s set-clipboard off 
-        bind-key -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe "xclip -selection clipboard -i" \; send -X clear-selection
+        # set -s set-clipboard off 
+        # bind-key -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe "xclip -selection clipboard -i" \; send -X clear-selection
       '';
     };
     neovim = {

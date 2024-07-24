@@ -1,3 +1,8 @@
+
+
+-- Setting the mapleader needs to be before any bindings that use the `<leader>` key, otherwise they will use the default backslash leader
+vim.g.mapleader = ' '
+
 local function keymap(modes, keys, command, description)
   vim.keymap.set(modes, keys, command, {noremap = true, silent = true, desc = description})
 end
@@ -48,7 +53,38 @@ lazy.path = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 lazy.opts = {}
 
 lazy.setup({
-  -- the colorscheme should be available when starting Neovim
+  {"mfussenegger/nvim-dap",
+  },
+  {
+    "folke/lazydev.nvim",
+    ft = "lua", -- only load on lua files
+    opts = {
+      library = {
+        -- See the configuration section for more details
+        -- Load luvit types when the `vim.uv` word is found
+        { path = "luvit-meta/library", words = { "vim%.uv" } },
+      },
+    },
+  },
+  { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
+	{ "nvim-neotest/nvim-nio" },
+  { "rcarriga/nvim-dap-ui", 
+    requires = {"mfussenegger/nvim-dap","nvim-neotest/nvim-nio"} ,
+    init = function() 
+
+      local dap, dapui =require("dap"),require("dapui")
+      dap.listeners.after.event_initialized["dapui_config"]=function()
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated["dapui_config"]=function()
+        dapui.close()
+      end
+      dap.listeners.before.event_exited["dapui_config"]=function()
+        dapui.close()
+      end
+    end,
+
+  },
   {
     -- "Skalyaeve/a-nvim-theme", -- neon theme
     -- "folke/tokyonight.nvim",
@@ -59,9 +95,9 @@ lazy.setup({
     opts = {
       -- defaults here: https://github.com/tanvirtin/monokai.nvim/blob/master/lua/monokai.lua
       palette = {
-        name = 'monokai',
+        name = 'monokai_customized',
         base0 = '#222426',
-        base1 = '#211F22',
+        base1 = '#211F22', -- changed to make sticky context background look different
         -- base1 = '#272a30',
         base2 = '#26292C',
         base3 = '#2E323C',
@@ -88,10 +124,34 @@ lazy.setup({
         diff_text = '#23324d',
       },
     },
+    config = function(_, opts)
+
+      local palette = opts.palette
+      require('monokai').setup {
+        palette = opts.palette,
+        custom_hlgroups = {
+          StatusLine = {
+            -- fg = palette.base7,
+            fg = palette.black,
+            -- bg = palette.base3,
+            -- bg = "#cf745e",
+            bg = palette.base8,
+          },
+          StatusLineNC = {
+            -- fg = palette.grey,
+            fg = palette.base4,
+            -- bg = palette.base3,
+            bg = palette.black,
+          },
+        },
+
+
+      }
+
+			end,
     
     init = function()
       vim.opt.termguicolors = true
-
       -- load the colorscheme here
       -- vim.cmd.colorscheme('monokai_pro')
       -- vim.cmd.colorscheme('monokai')
@@ -105,7 +165,7 @@ lazy.setup({
     opts = {},
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     keys = { 
-        { "<leader>F" , "<cmd>NvimTreeOpen<cr>", "Open file tree"}
+        { "<leader>F" , "<cmd>NvimTreeOpen<cr>", desc = "Open file tree"}
     },
   },
   {
@@ -155,9 +215,27 @@ lazy.setup({
     'nvim-telescope/telescope.nvim', tag = '0.1.6',
     dependencies = { 
       'nvim-lua/plenary.nvim',
-      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+      { 
+        -- If encountering errors, see telescope-fzf-native README for installation instructions
+        'nvim-telescope/telescope-fzf-native.nvim',
+
+        -- `build` is used to run some command when the plugin is installed/updated.
+        -- This is only run then, not every time Neovim starts up.
+        build = 'make',
+
+        -- `cond` is a condition used to determine whether this plugin should be
+        -- installed and loaded.
+        cond = function()
+          return vim.fn.executable 'make' == 1
+        end,
+      },
+      { 'nvim-telescope/telescope-ui-select.nvim' },
+
+      -- Useful for getting pretty icons, but requires a Nerd Font.
+      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
-    lazy = false, -- load on startup
+    event = "VimEnter",
+    -- lazy = false, -- load on startup
     opts = {
       defaults = {
         -- layout_strategy = 'flex',
@@ -200,24 +278,125 @@ lazy.setup({
     },
     init = function()
       require('telescope').load_extension('fzf')
+      local telescope_mappings = {
+        {'gd', "lsp_definitions", "Go to definitions"},
+        {'gi', "lsp_implementations", "Go to implementations"},
+        {'gt', "lsp_type_definitions", "Go to type definition"},
+        {'gr', "lsp_references", "Go to references"},
+        -- {'<leader>/', "live_grep", "Workspace grep"},
+        {'<leader>/', "grep_string", "Workspace fuzzy text search", {
+          path_display = { 'smart' },
+          only_sort_text = true,
+          word_match = "-w",
+          search = '',
+        }
+        },
+        {'<leader>b', "buffers", "Search open buffers"},
+        {'<leader>f', "find_files", "Search files" },
+        {'<leader>g', "git_files", "Search git files", {use_git_root=false} },
+        {'<leader>P', "commands", "Search commands"},
+        {'<leader>D', "diagnostics", "Workspace diagnostics", {sort_by="severity"}},
+        {'<leader>d', "diagnostics", "Single file diagnostics", {bufnr=0, sort_by="severity"} },
+        {'<C-f>', "current_buffer_fuzzy_find", "Current buffer fuzzy find"},
+        {'<leader>s', "lsp_document_symbols", "LSP symbols in document"},
+        {'<leader>S', "lsp_dynamic_workspace_symbols", "LSP symbols in workspace"},
+        {'<leader>t', "treesitter", "Treesitter symbols"},
+        {'<leader>T', "builtin", "Telescope builtins"},
+        {'<leader>\'', "resume", "Resume last telescope picker"},
+        {'<leader>j', "jumplist", "Jumplist"},
+        {'<leader>o', "oldfiles", "Recent files"},
+        {'<leader>O', "vim_options", "Vim options"},
+        {'<leader>m', "marks", "Vim marks"},
+      }
+
+      apply_telescope_theme = function(opts)
+        opts = opts or {}
+        -- opts = require('telescope.themes').get_dropdown(opts)
+        -- opts.layout_config.width = 0.9
+        -- opts.layout_config.height = 0.9
+        -- opts.layout_config.preview_cutoff = 1
+        return opts
+      end
+
+      for _, mapping in ipairs(telescope_mappings) do
+        local key, func, desc, opts = unpack(mapping)
+        opts = apply_telescope_theme(opts)
+        nmap(key, function() require("telescope.builtin")[func](opts) end, desc)
+      end
+
+      live_grep_word_under_cursor = function() 
+        local opts = {default_text = vim.fn.expand("<cword>")}
+        opts = apply_telescope_theme(opts)
+        require("telescope.builtin").live_grep(opts)
+      end
+
+      nmap('<leader>*', live_grep_word_under_cursor, "Workspace grep for word under cursor")
     end,
   },
 
+
+  -- Manager for external tools (LSPs, linters, debuggers, formatters)
+	-- auto-install of those external tools
+	{
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		dependencies = {
+			{ "williamboman/mason.nvim", opts = true },
+			{ "williamboman/mason-lspconfig.nvim", opts = true },
+		},
+		opts = {
+			ensure_installed = {
+				"pyright", -- LSP for python
+				"ruff-lsp", -- linter for python (includes flake8, pep8, etc.)
+				"debugpy", -- debugger
+				"black", -- formatter
+				"isort", -- organize imports
+				"taplo", -- LSP for toml (for pyproject.toml files)
+			},
+		},
+	},
+
+	-- Formatting client: conform.nvim
+	-- - configured to use black & isort in python
+	-- - use the taplo-LSP for formatting in toml
+	-- - Formatting is triggered via `<leader>f`, but also automatically on save
+	{
+		"stevearc/conform.nvim",
+		event = "BufWritePre", -- load the plugin before saving
+		keys = {
+			{
+				"<leader>=",
+				function() require("conform").format({ lsp_fallback = true }) end,
+				desc = "Format",
+			},
+		},
+		opts = {
+			formatters_by_ft = {
+				-- first use isort and then black
+				python = { "isort", "black" },
+				-- "inject" is a special formatter from conform.nvim, which
+				-- formats treesitter-injected code. Basically, this makes
+				-- conform.nvim format python codeblocks inside a markdown file.
+				markdown = { "inject" },
+			},
+			-- enable format-on-save
+			-- format_on_save = {
+			-- 	-- when no formatter is setup for a filetype, fallback to formatting
+			-- 	-- via the LSP. This is relevant e.g. for taplo (toml LSP), where the
+			-- 	-- LSP can handle the formatting for us
+			-- 	lsp_fallback = true,
+         -- timeout_ms = 500,
+			-- },
+		},
+	},
   {
     "folke/which-key.nvim",
-    lazy = false,
-    priority = 900,
-    -- event = "VeryLazy",
+    event = "VeryLazy",
     init = function()
       vim.o.timeout = true
       vim.o.timeoutlen = 300
       -- vim.o.timeoutlen = 0
     end,
-    opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    }
+    opts = {}
   },
   {
     "nvim-treesitter/nvim-treesitter",
@@ -250,20 +429,19 @@ lazy.setup({
   },
   {
     "folke/trouble.nvim",
-    lazy = false,
     opts = {},
     -- ft = [ "rust", "bash" ], -- load on filetype
-    -- cmd = "Trouble", -- load on command
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    cmd = "Trouble",
+    -- dependencies = { "nvim-tree/nvim-web-devicons" },
     keys = {
       {
         "<leader>x",
-        "<cmd>Trouble diagnostics toggle<cr>",
+        "<cmd>Trouble diagnostics toggle focus=true<cr>",
         desc =  "Diagnostics (Trouble)",
       },
       {
         "<leader>X",
-        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+        "<cmd>Trouble diagnostics toggle filter.buf=0 focus=true<cr>",
         desc =  "Buffer Diagnostics (Trouble)",
       },
       {
@@ -288,7 +466,22 @@ lazy.setup({
       },
     },
     -- init = function()
+      -- print("asdfasdf")
     --   vim.diagnostic.config({virtual_text = false})
+      -- vim.keymap.set({'n'}, "<leader>x", "<cmd>Trouble diagnostics toggle<cr>", {desc =  "Diagnostics (Trouble)", noremap = true, silent = true, });
+      -- vim.keymap.set({'n'}, "<leader>X", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", {desc =  "Buffer Diagnostics (Trouble)", noremap = true, silent = true, });
+      -- vim.keymap.set({'n'}, "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>", {desc = "Symbols (Trouble)", noremap = true, silent = true, });
+      -- vim.keymap.set({'n'}, "<leader>l", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", {desc = "LSP Definitions / references / ... (Trouble)", noremap = true, silent = true, });
+      -- vim.keymap.set({'n'}, "<leader>cl", "<cmd>Trouble loclist toggle<cr>", {desc = "Location List (Trouble)", noremap = true, silent = true, });
+      -- vim.keymap.set({'n'}, "<leader>cq", "<cmd>Trouble qflist toggle<cr>", {desc = "Quickfix List (Trouble)", noremap = true, silent = true, });
+    -- require("which-key").register({
+    --   ["<leader>x"] =  { "<cmd>Trouble diagnostics toggle<cr>", "Diagnostics (Trouble)" },
+    --   ["<leader>X"] =  { "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", "Buffer Diagnostics (Trouble)" },
+    --   ["<leader>cs"] = { "<cmd>Trouble symbols toggle focus=false<cr>",  "Symbols (Trouble)" }
+    --   ["<leader>l"] = {"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",  "LSP Definitions / references / ... (Trouble)" },
+    --   ["<leader>cl"] = {"<cmd>Trouble loclist toggle<cr>", "Location List (Trouble)"},
+    --   ["<leader>cq"] = {"<cmd>Trouble qflist toggle<cr>",  "Quickfix List (Trouble)"},
+    --   }),
     -- end
   },
   
@@ -326,6 +519,13 @@ lazy.setup({
       -- 'lukas-reineke/cmp-under-comparator',
       -- 'doxnit/cmp-luasnip-choice',
     },
+    opts = function(_, opts)
+      opts.sources = opts.sources or {}
+      table.insert(opts.sources, {
+        name = "lazydev",
+        group_index = 0, -- set group index to 0 to skip loading LuaLS completions
+      })
+    end,
     config = function(_, opts)
       local cmp = require('cmp')
       cmp.setup({
@@ -421,6 +621,7 @@ lazy.setup({
   {
     "johmsalas/text-case.nvim",
     dependencies = { "nvim-telescope/telescope.nvim" },
+    event = "VimEnter",
     -- config = function(_, opts)
       -- require("textcase").setup({})
     init = function()
@@ -443,7 +644,11 @@ lazy.setup({
     -- available after the first executing of it or after a keymap of text-case.nvim has been used.
     lazy = false,
   },
-  {"boltlessengineer/smart-tab.nvim",
+
+  {
+    -- Jump to end of syntax node on <tab> if not at end of line
+    enabled = false,
+    "boltlessengineer/smart-tab.nvim",
     opts = {},
   },
   {
@@ -468,8 +673,11 @@ lazy.setup({
   },
   {
     -- show colored backgrounds behind hex values
-    "norcalli/nvim-colorizer.lua",
+    'brenoprata10/nvim-highlight-colors',
     opts = {},
+    init = function()
+      vim.opt.termguicolors = true
+    end,
   },
   {
     -- show lsp errors under lines
@@ -482,14 +690,14 @@ lazy.setup({
     "RRethy/vim-illuminate",
     lazy = false,
   },
-  { "nvim-tree/nvim-web-devicons", lazy = true },
+  { "nvim-tree/nvim-web-devicons"},
   {
     "mrcjkb/rustaceanvim",
     version = '^4', -- Recommended
     lazy = false, -- load on startup
     -- config = function(_, opts) 
     keys = { 
-        { "<leader>e" , function() vim.cmd.RustLsp('expandMacro') end, "Expand macros"}
+        { "<leader>e" , function() vim.cmd.RustLsp('expandMacro') end, desc = "Expand macros"}
     },
     init = function()
       vim.g.rustaceanvim = {
@@ -509,6 +717,33 @@ lazy.setup({
       }
     end
   },
+	{
+    -- TODO: figure out what this one is even supposed to do
+    "gbprod/yanky.nvim",
+    enabled = false,
+    init = function()
+      vim.keymap.set({"n","x"}, "p", "<Plug>(YankyPutAfter)")
+      vim.keymap.set({"n","x"}, "P", "<Plug>(YankyPutBefore)")
+      vim.keymap.set({"n","x"}, "gp", "<Plug>(YankyGPutAfter)")
+      vim.keymap.set({"n","x"}, "gP", "<Plug>(YankyGPutBefore)")
+
+      vim.keymap.set("n", "<c-p>", "<Plug>(YankyPreviousEntry)")
+      vim.keymap.set("n", "<c-n>", "<Plug>(YankyNextEntry)")
+      vim.keymap.set("n", "]p", "<Plug>(YankyPutIndentAfterLinewise)")
+      vim.keymap.set("n", "[p", "<Plug>(YankyPutIndentBeforeLinewise)")
+      vim.keymap.set("n", "]P", "<Plug>(YankyPutIndentAfterLinewise)")
+      vim.keymap.set("n", "[P", "<Plug>(YankyPutIndentBeforeLinewise)")
+
+      vim.keymap.set("n", ">p", "<Plug>(YankyPutIndentAfterShiftRight)")
+      vim.keymap.set("n", "<p", "<Plug>(YankyPutIndentAfterShiftLeft)")
+      vim.keymap.set("n", ">P", "<Plug>(YankyPutIndentBeforeShiftRight)")
+      vim.keymap.set("n", "<P", "<Plug>(YankyPutIndentBeforeShiftLeft)")
+
+      vim.keymap.set("n", "=p", "<Plug>(YankyPutAfterFilter)")
+      vim.keymap.set("n", "=P", "<Plug>(YankyPutBeforeFilter)")
+		end,
+
+	},
   -- end of plugins
 })
 
@@ -565,7 +800,6 @@ vim.opt.winminwidth = 10 -- Minimum window width
 
 vim.opt.virtualedit = "block" -- Allow cursor to move where there is no text in visual block mode
 
-vim.g.mapleader = ' '
 -- vim.keymap.set({'n', 'x'}, '<leader>y', '"+y', {desc = "Yank to clipboard"})
 -- vim.keymap.set({'n', 'x'}, '<leader>p', '"+p', {desc = "Paste from clipboard"})
 
@@ -628,59 +862,7 @@ vim.keymap.set('v', 'R', '"_dP', {
 nmap('<leader>a',vim.lsp.buf.code_action, "Open LSP code actions")
 
 nmap('<leader>?', '<CMD> Telescope keymaps <CR>', "search keymaps")
-local telescope_mappings = {
-  {'gd', "lsp_definitions", "Go to definitions"},
-  {'gi', "lsp_implementations", "Go to implementations"},
-  {'gt', "lsp_type_definitions", "Go to type definition"},
-  {'gr', "lsp_references", "Go to references"},
-  -- {'<leader>/', "live_grep", "Workspace grep"},
-  {'<leader>/', "grep_string", "Workspace fuzzy text search", {
-    path_display = { 'smart' },
-    only_sort_text = true,
-    word_match = "-w",
-    search = '',
-  }
-  },
-  {'<leader>b', "buffers", "Search open buffers"},
-  {'<leader>f', "find_files", "Search files" },
-  {'<leader>g', "git_files", "Search git files", {use_git_root=false} },
-  {'<leader>P', "commands", "Search commands"},
-  {'<leader>D', "diagnostics", "Workspace diagnostics", {sort_by="severity"}},
-  {'<leader>d', "diagnostics", "Single file diagnostics", {bufnr=0, sort_by="severity"} },
-  {'<C-f>', "current_buffer_fuzzy_find", "Current buffer fuzzy find"},
-  {'<leader>s', "lsp_document_symbols", "LSP symbols in document"},
-  {'<leader>S', "lsp_dynamic_workspace_symbols", "LSP symbols in workspace"},
-  {'<leader>t', "treesitter", "Treesitter symbols"},
-  {'<leader>T', "builtin", "Telescope builtins"},
-  {'<leader>\'', "resume", "Resume last telescope picker"},
-  {'<leader>j', "jumplist", "Jumplist"},
-  {'<leader>o', "oldfiles", "Recent files"},
-  {'<leader>O', "vim_options", "Vim options"},
-  {'<leader>m', "marks", "Vim marks"},
-}
 
-apply_telescope_theme = function(opts)
-  opts = opts or {}
-  -- opts = require('telescope.themes').get_dropdown(opts)
-  -- opts.layout_config.width = 0.9
-  -- opts.layout_config.height = 0.9
-  -- opts.layout_config.preview_cutoff = 1
-  return opts
-end
-
-for _, mapping in ipairs(telescope_mappings) do
-  local key, func, desc, opts = unpack(mapping)
-  opts = apply_telescope_theme(opts)
-  nmap(key, function() require("telescope.builtin")[func](opts) end, desc)
-end
-
-live_grep_word_under_cursor = function() 
-  local opts = {default_text = vim.fn.expand("<cword>")}
-  opts = apply_telescope_theme(opts)
-  require("telescope.builtin").live_grep(opts)
-end
-
-nmap('<leader>*', live_grep_word_under_cursor, "Workspace grep for word under cursor")
 
 --[[
 vim.api.nvim_create_autocmd({"CursorHold", "CursorHoldI"}, {
@@ -699,15 +881,9 @@ vim.api.nvim_create_autocmd({"CursorHold", "CursorHoldI"}, {
 })
 ]]
 
--- -- Highlight on yank
--- vim.api.nvim_create_autocmd("TextYankPost", {
---   pattern  = "*",
---   callback = function() vim.highlight.on_yank { timeout = 200 } end
--- })
---
 function autocommands()
   local function augroup(name)
-    return vim.api.nvim_create_augroup("wrsh_autocommands_" .. name, { clear = true })
+    return vim.api.nvim_create_augroup("custom_autocommands_" .. name, { clear = true })
   end
   -- Highlight on yank
   -- From LazyVim: https://www.lazyvim.org/configuration/general
@@ -722,7 +898,8 @@ function autocommands()
   vim.api.nvim_create_autocmd('BufWritePre', {
     -- buffer = vim.fn.bufnr(),
     group = augroup("autoformat "),
-    pattern = { "rust" };
+    -- TODO: other file formats, like lua and python
+    pattern = { "rust"};--, "python" };
     callback = function() vim.lsp.buf.format({ timeout_ms = 3000 }) end
   })
 
@@ -802,16 +979,6 @@ autocommands()
 -- J and K move selected lines
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
-
-
--- Close help window with 'q'
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'help',
-  callback = function()
-    -- vim.api.nvim_buf_set_keymap(0, 'n', 'q', '<CMD> q <CR>', { noremap = true, silent = true })
-    vim.api.nvim_buf_set_keymap(0, 'n', 'q', '<CMD> helpclose <CR>', { noremap = true, silent = true })
-  end,
-})
 
 
 vim.opt.cursorline = true -- highlight entire cursor line
