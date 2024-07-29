@@ -58,6 +58,7 @@
       graphviz
       xcolor # color picker
       comic-mono # TODO: get access to the font
+      bpftrace
       # font list: https://www.nerdfonts.com/font-downloads
       #TODO: maybe only get specific fonts, because they are big
       ( nerdfonts.override { fonts = [ "FiraCode" ]; }) 
