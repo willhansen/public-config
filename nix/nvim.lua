@@ -345,8 +345,9 @@ lazy.setup({
 		},
 		opts = {
 			ensure_installed = {
-				"pyright", -- LSP for python
-				"ruff-lsp", -- linter for python (includes flake8, pep8, etc.)
+				-- "pyright", -- LSP for python
+				-- "ruff-lsp", -- linter for python (includes flake8, pep8, etc.)
+        "pylsp",
 				"debugpy", -- debugger
 				"black", -- formatter
 				"isort", -- organize imports
@@ -585,21 +586,31 @@ lazy.setup({
   },
   {
     'neovim/nvim-lspconfig',
-    enabled = false,
+    enabled = true,
     config = function(_, opts)
-      require('lspconfig').rust_analyzer.setup {
-        settings = {
-          ['rust-analyzer'] = {
-            workspace = {
-              symbol = {
-                search = {
-                  kind = "all_symbols",
-                },
-              },
-            },
-          }
-        }
+      require('lspconfig').pylsp.setup{
+        -- settings = {
+        --   pylsp = {
+        --     plugins = {
+        --       black = {enabled = true},
+        --     }
+        --   }
+        -- }
+
       }
+      -- require('lspconfig').rust_analyzer.setup {
+      --   settings = {
+      --     ['rust-analyzer'] = {
+      --       workspace = {
+      --         symbol = {
+      --           search = {
+      --             kind = "all_symbols",
+      --           },
+      --         },
+      --       },
+      --     }
+      --   }
+      -- }
     end
 
   },
