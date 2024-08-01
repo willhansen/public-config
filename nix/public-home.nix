@@ -26,6 +26,7 @@ in {
         nv = "nvim";
         nd = "nix develop";
 
+        ls = "ls --color=auto";
         l = "ls";
         ll = "ls -lh";
         la = "ls -a";
@@ -66,6 +67,7 @@ in {
       graphviz
       xcolor # color picker
       comic-mono # TODO: get access to the font
+      bpftrace
       # font list: https://www.nerdfonts.com/font-downloads
       #TODO: maybe only get specific fonts, because they are big
       ( nerdfonts.override { fonts = [ "ComicShannsMono" "FiraCode" ]; }) 
