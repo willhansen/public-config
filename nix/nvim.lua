@@ -347,6 +347,8 @@ lazy.setup({
 			ensure_installed = {
 				-- "pyright", -- LSP for python
 				-- "ruff-lsp", -- linter for python (includes flake8, pep8, etc.)
+        "ruff", -- should this be here?
+        -- "python-lsp-ruff", -- should this be here?
         "pylsp",
 				"debugpy", -- debugger
 				"black", -- formatter
@@ -589,13 +591,20 @@ lazy.setup({
     enabled = true,
     config = function(_, opts)
       require('lspconfig').pylsp.setup{
-        -- settings = {
-        --   pylsp = {
-        --     plugins = {
-        --       black = {enabled = true},
-        --     }
-        --   }
-        -- }
+        settings = {
+          pylsp = {
+            plugins = {
+              -- black = {enabled = true},
+              ruff = {
+                enabled = true, 
+                formatEnabled = false,
+                executable = "ruff",
+                -- ['line-length'] = 120, -- broken?
+                lint = { args = { "--line-length=120" } },
+              },
+            }
+          }
+        }
 
       }
       -- require('lspconfig').rust_analyzer.setup {

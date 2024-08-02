@@ -77,6 +77,7 @@ in {
       meld # merge tool
       jq #json parsing
       stress #artificial pc load
+      tealdeer #tldr
     ];
   };
   fonts.fontconfig.enable = true;
