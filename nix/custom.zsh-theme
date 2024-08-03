@@ -222,9 +222,9 @@ upper_left_decorator() {
 }
 # ◣ ◤
 # ◺ ◸ 
-# 🮆🮆
+# ❯   🮆🮆
 lower_left_decorator() {
-  echo -n "$(fg $PROFILE_ICON_BG "🮡")$(fgbg "black" $PROFILE_ORANGE "▁▁")  $(fg $PROFILE_ICON_BG "🮠")$(fg $TEAL "🭨🭬❯")"
+  echo -n "$(fg $PROFILE_ICON_BG "🮡")$(fg $PROFILE_ORANGE "🮆🮆")  $(fg $PROFILE_ICON_BG "🮠")$(fg $TEAL "🭨🭬")"
 }
 
 power_rangers() {
