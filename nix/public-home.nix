@@ -1,6 +1,7 @@
 
 { pkgs, ... }:
-let custom_zsh_dir = ".custom_zsh_stuff";
+let 
+  custom_zsh_dir = ".custom_zsh_stuff";
 in {
   home = {
 
