@@ -1,6 +1,13 @@
 
 { pkgs, ... }:
-let custom_zsh_dir = ".custom_zsh_stuff";
+let 
+  custom_zsh_dir = ".custom_zsh_stuff";
+  pkgs_stable  = import (pkgs.fetchFromGitHub {
+        owner = "NixOS";
+        repo = "nixpkgs";
+        rev = "release-24.05";
+        sha256 = "sha256-AcdGzdq7s8NNGMIOuggh27RqwLLIaPpB1Khdl8leHoM=";
+    }) { system = "x86_64-linux"; };
 in {
   home = {
 
@@ -120,7 +127,7 @@ in {
     };
     taskwarrior = {
       enable = true;
-      package = pkgs.taskwarrior3;
+      package = pkgs_stable.taskwarrior3;
       # theme here does not seem to work
       # colorTheme = "solarized-light-256";
       dataLocation = "$HOME/.task";

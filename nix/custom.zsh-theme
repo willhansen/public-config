@@ -12,21 +12,22 @@ local PROFILE_ICON_BG="$NICE_CYAN"
 local TRUE_RED="#ff0000"
 local TRUE_YELLOW="#ffff00"
 local TEAL="#06989a"
+local TRUE_WHITE="#ffffff"
 
 
-local  U_R="#ef8aab"         #  hue  0
-local  U_OR="#f48d7d"  #  hue  30
-local  U_O="#e89954"      #  hue  60
-local  U_Y="#cdaa41"      #  hue  90
-local  U_YG="#a4ba57"      #  hue  120
-local  U_G="#81c273"       #  hue  140
-local  U_GB="#6ec482"          #  hue  150
-local  U_GBB="#2cc8b1"         #  hue  180
-local  U_GBBB="#13c3da"        #  hue  210
-local  U_B="#58b8f6"           #  hue  240
-local  U_P="#8fa9ff"           #  hue  270
-local  U_V="#ba9bf3"           #  hue  300
-local  U_M="#db8fd4"           #  hue  330
+local  U_R="#ef8aab"    #  hue  0
+local  U_OR="#f48d7d"   #  hue  30
+local  U_O="#e89954"    #  hue  60
+local  U_Y="#cdaa41"    #  hue  90
+local  U_YG="#a4ba57"   #  hue  120
+local  U_G="#81c273"    #  hue  140
+local  U_GB="#6ec482"   #  hue  150
+local  U_GBB="#2cc8b1"  #  hue  180
+local  U_GBBB="#13c3da" #  hue  210
+local  U_B="#58b8f6"    #  hue  240
+local  U_P="#8fa9ff"    #  hue  270
+local  U_V="#ba9bf3"    #  hue  300
+local  U_M="#db8fd4"    #  hue  330
 
 #local TURQUOISE ORANGE PURPLE RED GREEN
 #if [[ $terminfo[colors] -ge 256 ]]; then
@@ -182,9 +183,12 @@ apply_italics() {
 digit_seven_segment() {
   echo -n "$1" | sed -e 'y/0123456789/🯰🯱🯲🯳🯴🯵🯶🯷🯸🯹/'
 }
+digit_superscript() {
+  echo -n "$1" | sed -e 'y/0123456789/⁰¹²³⁴⁵⁶⁷⁸⁹/'
+}
 
 shell_depth() {
-  echo -n "$(fg $MY_YELLOW "$(digit_seven_segment "$(printf '%02d' $SHLVL)")")"
+  echo -n "$(fg $MY_YELLOW "$(digit_superscript "$(printf '%02d' $SHLVL)")")"
 }
 
 current_dir() {
@@ -243,7 +247,10 @@ fancy_line_end() {
 
 local nix_prompt_string() {
   if [[ -n "$IN_NIX_SHELL" ]]; then
-    echo -n "%F{white}$(font_blackboard 'N IX ')%f"
+    # ℕ 𝕀𝕏
+    # $(font_blackboard 'N IX ')
+    # Unsure why bg works here, but fg does not.  Also why the color needs to be quoted
+    echo -n "$(bg "$TRUE_WHITE" "ℕ 𝕀𝕏 ")"
   fi
 }
 
