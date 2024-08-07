@@ -595,12 +595,8 @@ lazy.setup({
           pylsp = {
             plugins = {
               -- black = {enabled = true},
-              ruff = {
-                enabled = true, 
-                formatEnabled = false,
-                executable = "ruff",
-                -- ['line-length'] = 120, -- broken?
-                lint = { args = { "--line-length=120" } },
+              pycodestyle = {
+                maxLineLength = 120,
               },
             }
           }
