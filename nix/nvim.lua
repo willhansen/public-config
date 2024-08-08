@@ -596,7 +596,8 @@ lazy.setup({
             plugins = {
               -- black = {enabled = true},
               pycodestyle = {
-                maxLineLength = 120,
+                -- maxLineLength = 120,
+                ignore = { "E501" },
               },
             }
           }
