@@ -21,6 +21,8 @@ in {
         # "cd ......" = "cd ../../../../..";
 
         t = "task"; # for taskwarrior
+        tl = "task long limit:10";
+        tla = "task long";
         savetasks = "pushd ~/.task && ./do_export.sh && git commit -am 'update' && git push && popd";
 
         mysudo = "sudo env \"PATH=$PATH\"";
