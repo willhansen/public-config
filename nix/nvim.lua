@@ -347,9 +347,7 @@ lazy.setup({
 			ensure_installed = {
 				-- "pyright", -- LSP for python
 				-- "ruff-lsp", -- linter for python (includes flake8, pep8, etc.)
-        "ruff", -- should this be here?
-        -- "python-lsp-ruff", -- should this be here?
-        "pylsp",
+                                "pylsp",
 				"debugpy", -- debugger
 				"black", -- formatter
 				"isort", -- organize imports
