@@ -347,10 +347,10 @@ lazy.setup({
 			ensure_installed = {
 				-- "pyright", -- LSP for python
 				-- "ruff-lsp", -- linter for python (includes flake8, pep8, etc.)
-                                "pylsp",
+        "pylsp",
 				"debugpy", -- debugger
 				"black", -- formatter
-				"isort", -- organize imports
+				-- "isort", -- organize imports
 				"taplo", -- LSP for toml (for pyproject.toml files)
 			},
 		},

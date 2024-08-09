@@ -130,7 +130,7 @@ in {
       enable = true;
       package = pkgs.taskwarrior3;
       # theme here does not seem to work
-      # colorTheme = "solarized-light-256";
+      colorTheme = "solarized-dark-256";
       dataLocation = "$HOME/.task";
       # config.hooks.location = "$HOME/.config/task/hooks";
       # extraConfig = "
