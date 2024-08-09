@@ -589,13 +589,17 @@ lazy.setup({
     enabled = true,
     config = function(_, opts)
       require('lspconfig').pylsp.setup{
-        -- settings = {
-        --   pylsp = {
-        --     plugins = {
-        --       black = {enabled = true},
-        --     }
-        --   }
-        -- }
+        settings = {
+          pylsp = {
+            plugins = {
+              -- black = {enabled = true},
+              pycodestyle = {
+                -- maxLineLength = 120,
+                ignore = { "E501" },
+              },
+            }
+          }
+        }
 
       }
       -- require('lspconfig').rust_analyzer.setup {
