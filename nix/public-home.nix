@@ -40,7 +40,7 @@ in {
         gcam = "git commit -am";
         amend = "git commit --amend";
         # gitgraph = " git log --oneline --graph --decorate --all";
-        gitgraph = "git log --graph --pretty=\"%C(#9a9600)%h %C(#1f95f3)%ar %C(#e65d62)%s \" --date=human";
+        gitgraph = "git log --graph --pretty=\"%C(#9a9600)%h %C(#1f95f3)%ar %C(#e65d62)%s %C(auto)%d\" --date=human";
         # gitg = "gitgraph";
         gg = "gitgraph";
 
@@ -106,6 +106,10 @@ in {
   programs = {
     git = {
       enable = true;
+      aliases = {
+        lga = "lg --all";
+        lg = "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(auto)%d%C(reset)'";
+      };
       extraConfig = {
         push.autoSetupRemote = true;
         init.defaultBranch = "main";
