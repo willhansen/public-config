@@ -862,7 +862,7 @@ nivmap("<C-s>", '<CMD> wa <CR>', "Save all buffers" )
 
 nmap('ge', 'G', "Go to end of file")
 nmap('gD', vim.lsp.buf.declaration, "Go to declaration")
--- nmap('gd', vim.lsp.buf.definition, "Go to definition")
+nmap('gd', vim.lsp.buf.definition, "Go to definition")
 
 vim.keymap.set({ "n" }, "<leader> R" , "<cmd>InspectTree<cr>", { desc = "Inspect treesitter tree " })
 
