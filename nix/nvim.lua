@@ -595,7 +595,11 @@ lazy.setup({
               -- black = {enabled = true},
               pycodestyle = {
                 -- maxLineLength = 120,
-                ignore = { "E501" },
+                ignore = { "E501", -- line length
+                  "E203", -- whitespace before ':'
+                  "E701", -- multiple statements on one line (colon)
+                  "W503", -- line break before binary operator
+                },
               },
             }
           }
