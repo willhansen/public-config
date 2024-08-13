@@ -595,7 +595,11 @@ lazy.setup({
               -- black = {enabled = true},
               pycodestyle = {
                 -- maxLineLength = 120,
-                ignore = { "E501" },
+                ignore = { "E501", -- line length
+                  "E203", -- whitespace before ':'
+                  "E701", -- multiple statements on one line (colon)
+                  "W503", -- line break before binary operator
+                },
               },
             }
           }
@@ -862,7 +866,7 @@ nivmap("<C-s>", '<CMD> wa <CR>', "Save all buffers" )
 
 nmap('ge', 'G', "Go to end of file")
 nmap('gD', vim.lsp.buf.declaration, "Go to declaration")
--- nmap('gd', vim.lsp.buf.definition, "Go to definition")
+nmap('gd', vim.lsp.buf.definition, "Go to definition")
 
 vim.keymap.set({ "n" }, "<leader> R" , "<cmd>InspectTree<cr>", { desc = "Inspect treesitter tree " })
 
