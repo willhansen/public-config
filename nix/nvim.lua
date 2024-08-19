@@ -373,7 +373,8 @@ lazy.setup({
 		opts = {
 			formatters_by_ft = {
 				-- first use isort and then black
-				python = { "isort", "black" },
+				-- python = { "isort", "black" },
+				python = { "black" },
 				-- "inject" is a special formatter from conform.nvim, which
 				-- formats treesitter-injected code. Basically, this makes
 				-- conform.nvim format python codeblocks inside a markdown file.
