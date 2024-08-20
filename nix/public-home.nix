@@ -36,6 +36,8 @@ in {
 
         gs = "git status";
         gd = "git diff";
+        gdc = "git diff --color-words";
+        gdw = "gdc";
         gcm = "git commit -m";
         gcam = "git commit -am";
         amend = "git commit --amend";
@@ -156,8 +158,6 @@ in {
         ];
 
       extraConfig = ''
-        # TODO: fix mouse scroll in non-mouse-enabled-but-scrolling applications like bacon and less
-        #set -g @emulate-scroll-for-no-mouse-alternate-buffer "on"
 
         # TODO: why the extra `.` on the select pane commands?  indicates current window?
         bind -n M-h select-window -t :-
@@ -193,11 +193,27 @@ in {
         # g for global, a for append, terminal-overrides to describe functionality of terminal outside tmux
         set -ga terminal-overrides ",xterm-256color:Tc"
         
-        set -g @plugin 'tmux-plugins/tmux-yank'
+
+
+        # TODO: fix mouse scroll in non-mouse-enabled-but-scrolling applications like bacon and less
+        #set -g @emulate-scroll-for-no-mouse-alternate-buffer "on"
+
+        # set -g @plugin 'tmux-plugins/tmux-yank'
 
         # Override the default copy to clipboard method (didn't seem to work on gnome terminal)
         # set -s set-clipboard off 
         # bind-key -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe "xclip -selection clipboard -i" \; send -X clear-selection
+
+
+
+        #set -g mouse on
+
+        # for tmux's default "emacs" mode-keys (copy-mode)
+        bind-key -T copy-mode MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xclip -selection primary -filter | xclip -selection clipboard"
+
+        # if you are using "vi" mode-keys (copy-mode-vi), it will be probably like so:
+        # set-window-option -g mode-keys vi
+        # bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xclip -selection primary -filter | xclip -selection clipboard"
       '';
     };
     neovim = {
