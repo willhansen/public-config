@@ -87,7 +87,8 @@ in {
   services = {
 
     flameshot = {
-      enable = true;
+      # TODO: enable after nix desktop shortcuts are sorted out
+      enable = false;
       settings = {
         General = {
           showStartupLaunchMessage = false;
