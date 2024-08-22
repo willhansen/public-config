@@ -34,6 +34,8 @@ in {
         lla = "ll -a";
         lal = "lla";
 
+        ga = "git add";
+        gaa = "git add --all";
         gs = "git status";
         gd = "git diff";
         gdc = "git diff --color-words";
