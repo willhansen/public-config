@@ -431,7 +431,9 @@ lazy.setup({
   },
   {
     "folke/trouble.nvim",
-    opts = {},
+    opts = {
+      follow = false,
+    },
     -- ft = [ "rust", "bash" ], -- load on filetype
     cmd = "Trouble",
     -- dependencies = { "nvim-tree/nvim-web-devicons" },
