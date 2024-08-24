@@ -196,6 +196,28 @@ in {
         set -ga terminal-overrides ",xterm-256color:Tc"
         
 
+        # scroll better
+        bind-key -n WheelUpPane {
+          if-shell -F '#{mouse_any_flag}' {
+              send-keys -M
+          } {
+            if-shell -F '#{alternate_on}' {
+              send-keys Up Up Up
+            } {
+              copy-mode -e
+            }
+          }
+        }
+        bind-key -n WheelDownPane {
+          if-shell -F '#{mouse_any_flag}' {
+              send-keys -M
+          } {
+            if-shell -F '#{alternate_on}' {
+              send-keys Down Down Down
+            }
+          }
+        }
+
 
         # TODO: fix mouse scroll in non-mouse-enabled-but-scrolling applications like bacon and less
         #set -g @emulate-scroll-for-no-mouse-alternate-buffer "on"
