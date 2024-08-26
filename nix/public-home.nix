@@ -83,6 +83,7 @@ in {
       sqlitebrowser
       meld # merge tool
       jq #json parsing
+      yq #yaml parsing
       stress #artificial pc load
       tealdeer #tldr
     ];
@@ -121,13 +122,13 @@ in {
         push.autoSetupRemote = true;
         init.defaultBranch = "main";
         diff.tool = "meld";
-        difftool."meld" = {
-          cmd = "meld \"$LOCAL\" \"$REMOTE\"";
-        };
+        # difftool."meld" = {
+        #   cmd = "meld \"$LOCAL\" \"$REMOTE\"";
+        # };
         merge.tool = "meld";
-        mergetool."meld" = {
-          cmd = "meld \"$LOCAL\" \"$MERGED\" \"$REMOTE\" -o \"$MERGED\" --auto-merge";
-        };
+        # mergetool."meld" = {
+        #   cmd = "meld \"$LOCAL\" \"$MERGED\" \"$REMOTE\" -o \"$MERGED\" --auto-merge";
+        # };
 
       };
     };
@@ -192,6 +193,10 @@ in {
 
         # highlight title of zoomed tmux window
         setw -g window-status-current-format '#{?window_zoomed_flag,#[fg=red],}#F#I [#W] '
+        setw -g pane-border-format "#P: #{pane_current_command}"
+
+        # pane title
+        tmux set -g pane-border-status top
 
         # allow more colors
         set -g default-terminal "tmux-256color"
