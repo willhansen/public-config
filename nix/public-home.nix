@@ -81,6 +81,7 @@ in {
       # nerdfonts
       sqlite
       sqlitebrowser
+      sqldiff
       meld # merge tool
       jq #json parsing
       yq #yaml parsing
