@@ -173,8 +173,8 @@ in {
         bind -n M-j select-pane -t :.+
 
         # Moving windows 
-        bind -n M-H swap-window -t -1 \; select window -t -1
-        bind -n M-L swap-window -t +1 \; select window -t +1
+        bind -n M-H swap-window -t -1 \; select-window -t -1
+        bind -n M-L swap-window -t +1 \; select-window -t +1
 
         # switch panes using Alt-arrow without prefix
         bind -n M-Left select-pane -L
@@ -201,7 +201,7 @@ in {
         setw -g pane-border-format "#P: #{pane_current_command}"
 
         # pane title
-        tmux set -g pane-border-status top
+        set -g pane-border-status top
 
         # allow more colors
         set -g default-terminal "tmux-256color"
