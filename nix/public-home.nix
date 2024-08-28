@@ -172,6 +172,10 @@ in {
         bind -n M-k select-pane -t :.-
         bind -n M-j select-pane -t :.+
 
+        # Moving windows 
+        bind -n M-H swap-window -t -1 \; select window -t -1
+        bind -n M-L swap-window -t +1 \; select window -t +1
+
         # switch panes using Alt-arrow without prefix
         bind -n M-Left select-pane -L
         bind -n M-Right select-pane -R
