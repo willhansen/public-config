@@ -766,6 +766,29 @@ lazy.setup({
 		end,
 
 	},
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    opts = {
+      options = {
+        -- section_separators = { left = '🭬', right = '🭮'},
+        -- section_separators = { left = '🬱', right = '🬵'},
+        -- section_separators = { left = '🭐', right = '🭅'},
+        -- section_separators = { left = '🬮', right = '🬯'},
+        section_separators = { left = '🭀', right = '🭋'},
+        component_separators = { left = '🭦🭀', right = '🭋🭛'},
+        -- component_separators = { left = '╲', right = '╱'},
+      },
+      sections = {
+        lualine_c = {
+          {
+            'filename',
+            path = 3, -- full path with tilde
+          }
+        }
+      }
+    }
+  }
   -- end of plugins
 })
 
