@@ -21,6 +21,8 @@ in {
         # "cd ......" = "cd ../../../../..";
 
         t = "task"; # for taskwarrior
+        tl = "task long limit:10";
+        tla = "task long";
         savetasks = "pushd ~/.task && ./do_export.sh && git commit -am 'update' && git push && popd";
 
         mysudo = "sudo env \"PATH=$PATH\"";
@@ -79,8 +81,10 @@ in {
       # nerdfonts
       sqlite
       sqlitebrowser
+      sqldiff
       meld # merge tool
       jq #json parsing
+      yq #yaml parsing
       stress #artificial pc load
       tealdeer #tldr
     ];
@@ -89,7 +93,8 @@ in {
   services = {
 
     flameshot = {
-      enable = true;
+      # TODO: enable after nix desktop shortcuts are sorted out
+      enable = false;
       settings = {
         General = {
           showStartupLaunchMessage = false;
@@ -118,13 +123,13 @@ in {
         push.autoSetupRemote = true;
         init.defaultBranch = "main";
         diff.tool = "meld";
-        difftool."meld" = {
-          cmd = "meld \"$LOCAL\" \"$REMOTE\"";
-        };
+        # difftool."meld" = {
+        #   cmd = "meld \"$LOCAL\" \"$REMOTE\"";
+        # };
         merge.tool = "meld";
-        mergetool."meld" = {
-          cmd = "meld \"$LOCAL\" \"$MERGED\" \"$REMOTE\" -o \"$MERGED\" --auto-merge";
-        };
+        # mergetool."meld" = {
+        #   cmd = "meld \"$LOCAL\" \"$MERGED\" \"$REMOTE\" -o \"$MERGED\" --auto-merge";
+        # };
 
       };
     };
@@ -132,7 +137,7 @@ in {
       enable = true;
       package = pkgs.taskwarrior3;
       # theme here does not seem to work
-      # colorTheme = "solarized-light-256";
+      colorTheme = "solarized-dark-256";
       dataLocation = "$HOME/.task";
       # config.hooks.location = "$HOME/.config/task/hooks";
       # extraConfig = "
@@ -167,6 +172,10 @@ in {
         bind -n M-k select-pane -t :.-
         bind -n M-j select-pane -t :.+
 
+        # Moving windows 
+        bind -n M-H swap-window -t -1 \; select-window -t -1
+        bind -n M-L swap-window -t +1 \; select-window -t +1
+
         # switch panes using Alt-arrow without prefix
         bind -n M-Left select-pane -L
         bind -n M-Right select-pane -R
@@ -189,6 +198,10 @@ in {
 
         # highlight title of zoomed tmux window
         setw -g window-status-current-format '#{?window_zoomed_flag,#[fg=red],}#F#I [#W] '
+        setw -g pane-border-format "#P: #{pane_current_command}"
+
+        # pane title
+        set -g pane-border-status top
 
         # allow more colors
         set -g default-terminal "tmux-256color"
