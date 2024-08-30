@@ -53,6 +53,9 @@ in {
         # git diff, but without the +/- at line start
         gitcleandiff = "git diff --output-indicator-{old,new,context}=' '";
 
+        copybranch = "git branch --show-current | xclip -selection clipboard";
+        cb = "copybranch";
+
         # update = "sudo nixos-rebuild switch";
         howbig = "du -hs * | sort -hr";
         big = "howbig";
