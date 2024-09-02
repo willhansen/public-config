@@ -242,7 +242,23 @@ lazy.setup({
         layout_strategy = 'vertical',
         winblend = 5, -- out of 100
         scroll_strategy = "limit",
-        path_display = {"smart"},
+        -- path_display = {"smart"},
+        path_display = function(opts, path)
+          local tail = require("telescope.utils").path_tail(path)
+          path = string.format("%s (%s)", tail, path)
+
+          local highlights = {
+            {
+              {
+                0, -- highlight start position
+                #path, -- highlight end position
+              },
+              "Comment", -- highlight group name
+            },
+          }
+
+          return path, highlights
+        end,
         dynamic_preview_title = true,
         layout_config = {
           horizontal = {
@@ -267,14 +283,7 @@ lazy.setup({
           },
         },
       },
-      extensions = {
-        fzf = {
-          fuzzy = true,
-          override_generic_sorter = true,
-          override_file_sorter = true,
-          case_mode = "smart_case",
-        },
-  },
+      extensions = {},
     },
     init = function()
       require('telescope').load_extension('fzf')
@@ -285,7 +294,6 @@ lazy.setup({
         {'gr', "lsp_references", "Go to references"},
         -- {'<leader>/', "live_grep", "Workspace grep"},
         {'<leader>/', "grep_string", "Workspace fuzzy text search", {
-          path_display = { 'smart' },
           only_sort_text = true,
           word_match = "-w",
           search = '',
