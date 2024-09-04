@@ -1045,6 +1045,13 @@ vim.g.have_nerd_font = false -- effect unknown
 vim.opt.undofile = true -- Default location appears to be ~/.local/state/nvim/undo/
 vim.opt.inccommand = 'split' -- better previews for substitue commands (`:s/ ... / ... /g`)
 
+vim.opt.list = true
+vim.opt.listchars:append {
+  precedes = "◀",
+  extends = "▶"
+}
+
+
 vim.lsp.inlay_hint.enable(true)
 
 
