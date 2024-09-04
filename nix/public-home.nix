@@ -165,96 +165,24 @@ in {
           #tmuxPlugins.better-mouse-mode
 
           tmuxPlugins.yank
+          tmuxPlugins.cpu
+            {
+              plugin = tmuxPlugins.resurrect;
+              extraConfig = "set -g @resurrect-strategy-nvim 'session'";
+            }
+            {
+              plugin = tmuxPlugins.continuum;
+              extraConfig = ''
+                set -g @continuum-restore 'on'
+                set -g @continuum-save-interval '60' # minutes
+              '';
+            }
+          tmuxPlugins.tmux-thumbs
+          tmuxPlugins.sidebar
+
         ];
 
-      extraConfig = ''
-
-        # TODO: why the extra `.` on the select pane commands?  indicates current window?
-        bind -n M-h select-window -t :-
-        bind -n M-l select-window -t :+
-        bind -n M-k select-pane -t :.-
-        bind -n M-j select-pane -t :.+
-
-        # Moving windows 
-        bind -n M-H swap-window -t -1 \; select-window -t -1
-        bind -n M-L swap-window -t +1 \; select-window -t +1
-
-        # switch panes using Alt-arrow without prefix
-        bind -n M-Left select-pane -L
-        bind -n M-Right select-pane -R
-        bind -n M-Up select-pane -U
-        bind -n M-Down select-pane -D
-
-        # terminator window splitting bindings
-        bind -n M-O split-window -c "#{pane_current_path}" # split up-down
-        bind -n M-E split-window -h -c "#{pane_current_path}" # split left-right
-        bind -n M-X resize-pane -Z # zoom pane
-        bind -n M-W kill-pane
-        bind -n M-R respawn-pane -k # respawn pane, killing running processes
-        bind -n M-N new-window -c "#{pane_current_path}" # new tab
-        bind -n M-< command-prompt -I'#W' { rename-window -- '%%' } # rename
-
-        # rebind the default spit commands to have them open in current directory
-        bind c new-window -c "#{pane_current_path}"
-        bind '"' split-window -c "#{pane_current_path}"
-        bind % split-window -h -c "#{pane_current_path}"
-
-        # highlight title of zoomed tmux window
-        setw -g window-status-current-format '#{?window_zoomed_flag,#[fg=red],}#F#I [#W] '
-        setw -g pane-border-format "#P: #{pane_current_command}"
-
-        # pane title
-        set -g pane-border-status top
-
-        # allow more colors
-        set -g default-terminal "tmux-256color"
-        # g for global, a for append, terminal-overrides to describe functionality of terminal outside tmux
-        set -ga terminal-overrides ",xterm-256color:Tc"
-        
-
-        # scroll better
-        bind-key -n WheelUpPane {
-          if-shell -F '#{mouse_any_flag}' {
-              send-keys -M
-          } {
-            if-shell -F '#{alternate_on}' {
-              send-keys Up Up Up
-            } {
-              copy-mode -e
-            }
-          }
-        }
-        bind-key -n WheelDownPane {
-          if-shell -F '#{mouse_any_flag}' {
-              send-keys -M
-          } {
-            if-shell -F '#{alternate_on}' {
-              send-keys Down Down Down
-            }
-          }
-        }
-
-
-        # TODO: fix mouse scroll in non-mouse-enabled-but-scrolling applications like bacon and less
-        #set -g @emulate-scroll-for-no-mouse-alternate-buffer "on"
-
-        # set -g @plugin 'tmux-plugins/tmux-yank'
-
-        # Override the default copy to clipboard method (didn't seem to work on gnome terminal)
-        # set -s set-clipboard off 
-        # bind-key -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe "xclip -selection clipboard -i" \; send -X clear-selection
-
-
-
-        #set -g mouse on
-
-        # for tmux's default "emacs" mode-keys (copy-mode)
-        bind-key -T copy-mode MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xclip -selection primary -filter | xclip -selection clipboard"
-
-        # if you are using "vi" mode-keys (copy-mode-vi), it will be probably like so:
-        # set-window-option -g mode-keys vi
-        # bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xclip -selection primary -filter | xclip -selection clipboard"
-      '';
+      extraConfig = builtins.readFile ./tmux.conf;
     };
     neovim = {
       enable = true;

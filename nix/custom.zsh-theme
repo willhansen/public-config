@@ -111,26 +111,26 @@ function printf_n() {
 #local GIT_STRING_FOR_UNPUSHED="🟢🟡"
 #local GIT_STRING_FOR_ALL_OKAY="🟢 "
 
-fg() {
+fg_color() {
   echo -n "%F{$1}$2%f"
 }
 bg() {
   echo -n "%K{$1}$2%k"
 }
 fgbg() {
-  fg "$1" "$(bg "$2" "$3")"
+  fg_color "$1" "$(bg "$2" "$3")"
 }
 
 # ⭕𒊹 ⬤ 
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg_bold[red]%}𒊹%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}𒊹%{$reset_color%}"
 #↥↥↥↥ ↑↑↑⬆⬆⬆ ⭜⭜⭜⭜ 🠉🠉🠉 🠱🠱🠱 🠝🠝🠝 ⯭⯭⯭ 🢁🢁🢁 ⮝⮝⮝⮝🡅🡅🡅🡅🢕🢕🢕🢕⭎⭎⭎⭎🠵🠵🠵🠵🢙🢙🢙🢙⨇⨇⨇⨇ ⇈⇈⇈▲▲▲▲▴▴▴▴
-ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE="$(fg $TRUE_YELLOW 🠉🠉🠉🠉) "
+ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE="$(fg_color $TRUE_YELLOW 🠉🠉🠉🠉) "
 #⤓⤓⤓⤓↓↓↓⬇⬇⬇ ⭝⭝⭝⭝ 🠋🠋🠋 🠳🠳🠳 🠟🠟🠟 ⯯⯯⯯🢃🢃🢃⮟⮟⮟⮟🡇🡇🡇🡇🢗🢗🢗🢗⭏⭏⭏⭏🠷🠷🠷🠷🢛🢛🢛🢛▼▼▼▼
-ZSH_THEME_GIT_PROMPT_BEHIND_REMOTE="$(fg $TRUE_YELLOW 🠋🠋🠋🠋) "
+ZSH_THEME_GIT_PROMPT_BEHIND_REMOTE="$(fg_color $TRUE_YELLOW 🠋🠋🠋🠋) "
 #↕️↕️↕️ emoji  ⬍   ⥌⥍⥌⥍⥌⥍  ⇕ ⇳ ⥮⥯  ⇅⇵⇅⇵⇅⇵⇅⇵⇵⇵⇵⇵⇵ ↨↨↨↨ ⇊⇈⇊⇈⇊⇈⇊⇈
 #⇈⇅⇊⇈⇅⇊⇈⇅⇊⇈⇅⇊ ↕↕↕ not emoji⬍⬍⬍ ⤨ ⤨⤨⤨ 🢗🢕🢗🢕🢗🢕
-ZSH_THEME_GIT_PROMPT_DIVERGED_REMOTE="$(fg $TRUE_RED 🠉🠋🠉🠋🠉🠋🠉🠋) "
+ZSH_THEME_GIT_PROMPT_DIVERGED_REMOTE="$(fg_color $TRUE_RED 🠉🠋🠉🠋🠉🠋🠉🠋) "
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%F{yellow}❨"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%F{yellow}❩%f"
@@ -188,12 +188,12 @@ digit_superscript() {
 }
 
 shell_depth() {
-  echo -n "$(fg $MY_YELLOW "$(digit_superscript "$(printf '%02d' $SHLVL)")")"
+  echo -n "$(fg_color $MY_YELLOW "$(digit_superscript "$(printf '%02d' $SHLVL)")")"
 }
 
 current_dir() {
   local TEXT=" %~"
-  echo -n "$(bold "$(fg blue "$TEXT")")"
+  echo -n "$(bold "$(fg_color blue "$TEXT")")"
 }
 
 return_code_string() {
@@ -221,26 +221,26 @@ return_code_string() {
 #
 #   
 upper_left_decorator() {
-  echo -n "$(fg $PROFILE_ICON_BG "🮣")$(fg $PROFILE_ORANGE "  ▇▇")$(fg $PROFILE_ICON_BG "🮢")"
+  echo -n "$(fg_color $PROFILE_ICON_BG "🮣")$(fg_color $PROFILE_ORANGE "  ▇▇")$(fg_color $PROFILE_ICON_BG "🮢")"
   # clear_formatting
 }
 # ◣ ◤
 # ◺ ◸ 
 # ❯   🮆🮆
 lower_left_decorator() {
-  echo -n "$(fg $PROFILE_ICON_BG "🮡")$(fg $PROFILE_ORANGE "🮆🮆")  $(fg $PROFILE_ICON_BG "🮠")$(fg $TEAL "🭨🭬")"
+  echo -n "$(fg_color $PROFILE_ICON_BG "🮡")$(fg_color $PROFILE_ORANGE "🮆🮆")  $(fg_color $PROFILE_ICON_BG "🮠")$(fg_color $TEAL "🭨🭬")"
 }
 
 power_rangers() {
   #bpryb
-  echo -n "$(fg $U_B "🯅")$(fg $U_M "🯈")$(fg $U_R "🯆")$(fg $U_Y "🯇")$(fg "#000000" "🯅")"
+  echo -n "$(fg_color $U_B "🯅")$(fg_color $U_M "🯈")$(fg_color $U_R "🯆")$(fg_color $U_Y "🯇")$(fg_color "#000000" "🯅")"
 }
 
 fancy_line_end() {
-  echo -n "$(fg \#442222 "꧁ ꧂  ") $(fg \#2178ff "𐁙 ") $(fg \#ff20bb " 𐙀 ") $(fg \#555555 " ៚ 𑜿 ") $(fg \#f0f0f0 "𐃆 𐼽 ꫝꫜ ") $(fg \#409040 "𐀢꩜ ") $(fg blue "𒓎   ") ꘐ   🮲🮳"
+  echo -n "$(fg_color \#442222 "꧁ ꧂  ") $(fg_color \#2178ff "𐁙 ") $(fg_color \#ff20bb " 𐙀 ") $(fg_color \#555555 " ៚ 𑜿 ") $(fg_color \#f0f0f0 "𐃆 𐼽 ꫝꫜ ") $(fg_color \#409040 "𐀢꩜ ") $(fg_color blue "𒓎   ") ꘐ   🮲🮳"
 }
 
-# $(fg \#402020 " 𑿛  𑿜  ") $(fg \#000000 " 𑿭 𑿿  ") 
+# $(fg_color \#402020 " 𑿛  𑿜  ") $(fg_color \#000000 " 𑿭 𑿿  ") 
 
   # ◯   🙼🙼 🙼🙼  ͞ ͞ ͞ 
 
@@ -249,7 +249,7 @@ local nix_prompt_string() {
   if [[ -n "$IN_NIX_SHELL" ]]; then
     # ℕ 𝕀𝕏
     # $(font_blackboard 'N IX ')
-    # Unsure why bg works here, but fg does not.  Also why the color needs to be quoted
+    # Unsure why bg works here, but fg_color does not.  Also why the color needs to be quoted
     echo -n "$(bg "$TRUE_WHITE" "ℕ 𝕀𝕏 ")"
   fi
 }
