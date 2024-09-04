@@ -596,7 +596,7 @@ lazy.setup({
         settings = {
           pylsp = {
             plugins = {
-              -- black = {enabled = true},
+              black = {enabled = true},
               pycodestyle = {
                 -- maxLineLength = 120,
                 ignore = { "E501", -- line length
