@@ -162,20 +162,20 @@ in {
           #tmuxPlugins.better-mouse-mode
 
           tmuxPlugins.yank
-          tmuxPlugins.cpu
-            {
-              plugin = tmuxPlugins.resurrect;
-              extraConfig = "set -g @resurrect-strategy-nvim 'session'";
-            }
-            {
-              plugin = tmuxPlugins.continuum;
-              extraConfig = ''
-                set -g @continuum-restore 'on'
-                set -g @continuum-save-interval '60' # minutes
-              '';
-            }
-          tmuxPlugins.tmux-thumbs
-          tmuxPlugins.sidebar
+          # tmuxPlugins.cpu
+            # {
+            #   plugin = tmuxPlugins.resurrect;
+            #   extraConfig = "set -g @resurrect-strategy-nvim 'session'";
+            # }
+            # {
+            #   plugin = tmuxPlugins.continuum;
+            #   extraConfig = ''
+            #     set -g @continuum-restore 'on'
+            #     set -g @continuum-save-interval '60' # minutes
+            #   '';
+            # }
+          # tmuxPlugins.tmux-thumbs
+          # tmuxPlugins.sidebar
 
         ];
 
