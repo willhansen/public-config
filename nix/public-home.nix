@@ -87,6 +87,7 @@ in {
       yq #yaml parsing
       stress #artificial pc load
       tealdeer #tldr
+      jsbeautifier # js autoformat
     ];
   };
   fonts.fontconfig.enable = true;
