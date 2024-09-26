@@ -5,6 +5,10 @@ let
 in {
   home = {
 
+    sessionPath = [
+      "$HOME/bin"
+    ];
+
     # This is how to copy a directory from the config folder to the home folder
     file."${custom_zsh_dir}/themes/custom.zsh-theme".source =
       ./custom.zsh-theme;
@@ -52,6 +56,11 @@ in {
 
         # git diff, but without the +/- at line start
         gitcleandiff = "git diff --output-indicator-{old,new,context}=' '";
+
+        copybranch = "git branch --show-current | xclip -rmlastnl -selection clipboard";
+        cb = "copybranch";
+
+        xc = "xcolor";
 
         # update = "sudo nixos-rebuild switch";
         howbig = "du -hs * | sort -hr";
@@ -138,11 +147,14 @@ in {
       enable = true;
       package = pkgs.taskwarrior3;
       # theme here does not seem to work
-      colorTheme = "solarized-dark-256";
+      # colorTheme = "solarized-dark-256";
+      # colorTheme = "bubblegum-256";
+      colorTheme = "$HOME/.nix-profile/share/doc/task/rc/solarized-dark-256";
       dataLocation = "$HOME/.task";
       # config.hooks.location = "$HOME/.config/task/hooks";
       # extraConfig = "
-      #   include solarized-dark-256.theme;
+        # include '$HOME/.nix-profile/share/doc/task/rc/solarized-dark-256.theme';
+        # include solarized-dark-256.theme;
       # ";
     };
     tmux = {
