@@ -78,6 +78,8 @@ in {
       sd # alternative to sed
       bat # alternative to less
       htop
+      btop # htop alternative
+      bottom # htop alternative
       atop
       nodePackages.bash-language-server
       graphviz
