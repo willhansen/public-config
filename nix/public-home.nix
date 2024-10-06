@@ -60,7 +60,7 @@ in {
         copybranch = "git branch --show-current | xclip -rmlastnl -selection clipboard";
         cb = "copybranch";
 
-        xc = "xcolor";
+        xc = "xcolor | tee /dev/tty | xclip -rmlastnl -selection clipboard";
 
         # update = "sudo nixos-rebuild switch";
         howbig = "du -hs * | sort -hr";
@@ -85,6 +85,7 @@ in {
       nodePackages.bash-language-server
       graphviz
       xcolor # color picker
+      xclip
       comic-mono # TODO: get access to the font
       bpftrace
       # font list: https://www.nerdfonts.com/font-downloads
@@ -100,6 +101,7 @@ in {
       stress #artificial pc load
       tealdeer #tldr
       multitail
+      jsbeautifier # js autoformat
     ];
   };
   fonts.fontconfig.enable = true;
