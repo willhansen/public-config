@@ -1,3 +1,8 @@
+#root.root {--tabs-normal-bg: #EEE;}
+#root.root {--tabs-activated-bg: black;}
+#root.root {--tabs-activated-fg: white;}
+#root.root {--tabs-border-radius: 15px;}
+#root.root {--tabs-lvl-opacity: 1.0;}
 #root.root {--frame-bg: #b0b4c0;}
 #root.root {--bookmarks-inner-gap: 7px;}
 #root.root {--bookmarks-node-activated-fg: red;}
@@ -6,14 +11,11 @@
 #root.root {--scroll-color: black;}
 #root.root {--bookmarks-folder-height: 17px;}
 #root.root {--bookmarks-bookmark-height: 17px;}
-#root.root {--tabs-height: 17px;}
-#root.root {--tabs-margin: 0px;}
-#root.root {--tabs-normal-bg: #EEE;}
-#root.root {--tabs-border-radius: 15px;}
-#root.root {--tabs-activated-bg: black;}
+
+
 #root.root {--tabs-color-layer-opacity: 0.4;}
-#root.root {--tabs-lvl-opacity: 1.0;}
-#root.root {--tabs-activated-fg: white;}
+
+
 
 /* folder title */
 .BookmarkNode[data-type="folder"] > .body > .title { 
@@ -33,4 +35,40 @@ color:royalblue;
 
 
 /* unloaded tabs */
-.Tab[data-discarded="true"] .body { background-color:#0000; }
+.Tab[data-discarded="true"] .body { 
+	background-color:#0000;
+	/*border: 1px solid lightgrey;*/
+}
+
+.Tab .body {
+	border: 1px solid #c7c7c780;
+}
+
+
+/**/
+/* two line text*/
+#root {
+  --tabs-height: auto !important;
+  --tabs-font-size: .8rem;
+
+}
+
+.Tab .t-box {
+  align-items: center;
+  max-height: calc(var(--tabs-height) - var(--tabs-title-padding));
+  overflow: hidden;
+}
+
+/*
+  line-height: calc((var(--tabs-height) - var(--tabs-title-padding)) / var(--tabs-title-lines));
+  --tabs-title-lines: 2;  
+*/
+
+.Tab .title {
+  font-size: var(--tabs-font-size);
+	white-space: pre-wrap;
+}
+
+.Tab .close {
+	width: 40px !important;
+}
