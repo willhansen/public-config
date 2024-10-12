@@ -50,7 +50,7 @@ color:royalblue;
   align-items: center;
 	vertical-align: top;
   max-height: 5.5rem;
-	/* TODO: indicate overflow is there (some kind of fade-out? */
+	/* TODO: smooth fade-out? */
   overflow: hidden;
 }
 
