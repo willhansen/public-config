@@ -12,9 +12,7 @@
 #root.root {--bookmarks-folder-height: 17px;}
 #root.root {--bookmarks-bookmark-height: 17px;}
 
-
 #root.root {--tabs-color-layer-opacity: 0.4;}
-
 
 /* folder title */
 .BookmarkNode[data-type="folder"] > .body > .title { 
@@ -33,7 +31,6 @@ color:royalblue;
 .BookmarkNode .children::before { opacity:1; }
 
 
-
 /* unloaded tabs */
 .Tab[data-discarded="true"] .body { 
 	background-color:#0000;
@@ -42,8 +39,6 @@ color:royalblue;
 
 .Tab .body {
 	border: 1px solid #c7c7c780;
-	/*max-height: 50px;
-	overflow: hidden;*/
 }
 
 
@@ -54,8 +49,7 @@ color:royalblue;
 .Tab .t-box {
   align-items: center;
 	vertical-align: top;
-	/* TODO: select by number of lines */
-  max-height: 15ch;
+  max-height: 5.5rem;
 	/* TODO: indicate overflow is there (some kind of fade-out? */
   overflow: hidden;
 }
@@ -68,4 +62,3 @@ color:royalblue;
 .Tab .close {
 	width: 50px !important;
 }
-
