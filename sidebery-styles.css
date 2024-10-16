@@ -12,10 +12,7 @@
 #root.root {--bookmarks-folder-height: 17px;}
 #root.root {--bookmarks-bookmark-height: 17px;}
 
-
 #root.root {--tabs-color-layer-opacity: 0.4;}
-
-
 
 /* folder title */
 .BookmarkNode[data-type="folder"] > .body > .title { 
@@ -45,24 +42,17 @@ color:royalblue;
 }
 
 
-/**/
-/* two line text*/
-#root {
-  --tabs-height: auto !important;
-  --tabs-font-size: .8rem;
+#root {--tabs-height: auto !important;}
+#root {--tabs-font-size: .8rem;}
 
-}
 
 .Tab .t-box {
   align-items: center;
-  max-height: calc(var(--tabs-height) - var(--tabs-title-padding));
+	vertical-align: top;
+  max-height: 5.5rem;
+	/* TODO: smooth fade-out? */
   overflow: hidden;
 }
-
-/*
-  line-height: calc((var(--tabs-height) - var(--tabs-title-padding)) / var(--tabs-title-lines));
-  --tabs-title-lines: 2;  
-*/
 
 .Tab .title {
   font-size: var(--tabs-font-size);
@@ -70,5 +60,5 @@ color:royalblue;
 }
 
 .Tab .close {
-	width: 40px !important;
+	width: 50px !important;
 }
