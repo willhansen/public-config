@@ -599,8 +599,9 @@ lazy.setup({
   {
     'neovim/nvim-lspconfig',
     enabled = true,
-    config = function(_, opts)
-      require('lspconfig').pylsp.setup{
+    config = function(_, opts) 
+      require('lspconfig').ts_ls.setup {}
+      require('lspconfig').pylsp.setup {
         settings = {
           pylsp = {
             plugins = {
