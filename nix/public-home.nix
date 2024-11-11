@@ -102,6 +102,7 @@ in {
       tealdeer #tldr
       multitail
       jsbeautifier # js autoformat
+      linuxPackages.perf
     ];
   };
   fonts.fontconfig.enable = true;
