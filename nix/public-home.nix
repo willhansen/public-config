@@ -103,6 +103,7 @@ in {
       multitail
       jsbeautifier # js autoformat
       linuxPackages.perf
+      oxtools # 0x.tools
     ];
   };
   fonts.fontconfig.enable = true;
