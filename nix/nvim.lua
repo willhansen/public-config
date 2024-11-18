@@ -68,23 +68,23 @@ lazy.setup({
   },
   { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
 	{ "nvim-neotest/nvim-nio" },
-  { "rcarriga/nvim-dap-ui", 
-    requires = {"mfussenegger/nvim-dap","nvim-neotest/nvim-nio"} ,
-    init = function() 
+  -- { "rcarriga/nvim-dap-ui", 
+  --   requires = {"mfussenegger/nvim-dap","nvim-neotest/nvim-nio"} ,
+  --   init = function() 
 
-      local dap, dapui =require("dap"),require("dapui")
-      dap.listeners.after.event_initialized["dapui_config"]=function()
-        dapui.open()
-      end
-      dap.listeners.before.event_terminated["dapui_config"]=function()
-        dapui.close()
-      end
-      dap.listeners.before.event_exited["dapui_config"]=function()
-        dapui.close()
-      end
-    end,
+  --     local dap, dapui =require("dap"),require("dapui")
+  --     dap.listeners.after.event_initialized["dapui_config"]=function()
+  --       dapui.open()
+  --     end
+  --     dap.listeners.before.event_terminated["dapui_config"]=function()
+  --       dapui.close()
+  --     end
+  --     dap.listeners.before.event_exited["dapui_config"]=function()
+  --       dapui.close()
+  --     end
+  --   end,
 
-  },
+  -- },
   {
     -- "Skalyaeve/a-nvim-theme", -- neon theme
     -- "folke/tokyonight.nvim",
@@ -677,12 +677,12 @@ lazy.setup({
     lazy = false,
   },
 
-  {
-    -- Jump to end of syntax node on <tab> if not at end of line
-    enabled = false,
-    "boltlessengineer/smart-tab.nvim",
-    opts = {},
-  },
+  -- {
+  --   -- Jump to end of syntax node on <tab> if not at end of line
+  --   enabled = false,
+  --   "boltlessengineer/smart-tab.nvim",
+  --   opts = {},
+  -- },
   {
     "ray-x/lsp_signature.nvim",
     event = "VeryLazy",
@@ -711,12 +711,12 @@ lazy.setup({
       vim.opt.termguicolors = true
     end,
   },
-  {
-    -- show lsp errors under lines
-    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    opts = {},
-    enabled = false,
-  },
+  -- {
+  --   -- show lsp errors under lines
+  --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+  --   opts = {},
+  --   enabled = false,
+  -- },
   {
     -- highlight symbol under cursor
     "RRethy/vim-illuminate",
@@ -726,7 +726,8 @@ lazy.setup({
   {
     "mrcjkb/rustaceanvim",
     version = '^4', -- Recommended
-    lazy = false, -- load on startup
+    -- lazy = false, -- load on startup
+    ft = "rust",
     -- config = function(_, opts) 
     keys = { 
         { "<leader>e" , function() vim.cmd.RustLsp('expandMacro') end, desc = "Expand macros"}
