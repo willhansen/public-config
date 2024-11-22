@@ -42,6 +42,7 @@ color:royalblue;
 .Tab .body {
 	border: 0px solid #c7c7c780;
 	box-shadow: inset 0px 1px 0px 0px #AAA;
+	padding-top: 1px;
 }
 
 
