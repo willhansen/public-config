@@ -80,6 +80,7 @@ in {
       htop
       btop # htop alternative
       bottom # htop alternative
+      glogg
       atop
       nodePackages.bash-language-server
       graphviz
@@ -99,7 +100,10 @@ in {
       yq #yaml parsing
       stress #artificial pc load
       tealdeer #tldr
+      multitail
       jsbeautifier # js autoformat
+      linuxPackages.perf
+      oxtools # 0x.tools
     ];
   };
   fonts.fontconfig.enable = true;
