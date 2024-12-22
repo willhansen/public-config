@@ -90,7 +90,7 @@ in {
       bpftrace
       # font list: https://www.nerdfonts.com/font-downloads
       #TODO: maybe only get specific fonts, because they are big
-      ( nerdfonts.override { fonts = [ "ComicShannsMono" "FiraCode" ]; }) 
+      # ( nerdfonts.override { fonts = [ "ComicShannsMono" "FiraCode" ]; }) 
       # nerdfonts
       sqlite
       sqlitebrowser
@@ -104,6 +104,7 @@ in {
       jsbeautifier # js autoformat
       linuxPackages.perf
       oxtools # 0x.tools
+      repgrep # ripgrep + replace in-place
     ];
   };
   fonts.fontconfig.enable = true;
@@ -271,6 +272,12 @@ in {
             ln -sf "$SSH_AUTH_SOCK" "$known_ssh_auth_sock_path"
         	fi
         	export SSH_AUTH_SOCK="$known_ssh_auth_sock_path"
+
+          # search replace
+          rpl() {
+            # rg "$1" --files-with-matches -0 | xargs -0 sed -i "s/$1/$2/g"
+            fd --type file --exec sd "$1" "$2"
+          }
         	'';
     };
     bash = {
