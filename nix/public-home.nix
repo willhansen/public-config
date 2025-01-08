@@ -86,12 +86,16 @@ in {
       graphviz
       xcolor # color picker
       xclip
-      comic-mono # TODO: get access to the font
       bpftrace
-      # font list: https://www.nerdfonts.com/font-downloads
-      #TODO: maybe only get specific fonts, because they are big
-      # ( nerdfonts.override { fonts = [ "ComicShannsMono" "FiraCode" ]; }) 
-      # nerdfonts
+      nerd-fonts.bigblue-terminal
+      nerd-fonts.comic-shanns-mono 
+      nerd-fonts.fira-code 
+      nerd-fonts.monofur
+      nerd-fonts.open-dyslexic
+      nerd-fonts.proggy-clean-tt
+      nerd-fonts.tinos
+      nerd-fonts.ubuntu-mono
+      nerd-fonts.ubuntu-sans
       sqlite
       sqlitebrowser
       sqldiff

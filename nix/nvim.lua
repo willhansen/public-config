@@ -519,14 +519,14 @@ lazy.setup({
     'hrsh7th/nvim-cmp',
     dependencies = {
       'neovim/nvim-lspconfig',
-      'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
       'hrsh7th/cmp-nvim-lua',
-      'hrsh7th/cmp-nvim-lsp-document-symbol',
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
+      -- 'hrsh7th/cmp-nvim-lsp-document-symbol',
+      -- 'L3MON4D3/LuaSnip',
+      -- 'saadparwaiz1/cmp_luasnip',
       -- 'onsails/lspkind.nvim',
       -- 'hrsh7th/cmp-nvim-lsp-signature-help',
       -- 'lukas-reineke/cmp-under-comparator',
@@ -558,8 +558,8 @@ lazy.setup({
           end,
         },
         mapping = cmp.mapping.preset.insert({
-          -- ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-          -- ['<C-f>'] = cmp.mapping.scroll_docs(4),
+          ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-d>'] = cmp.mapping.scroll_docs(4),
           ['<C-Space>'] = cmp.mapping.complete(),
           ['<Tab>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Replace }),
           ['<S-Tab>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Replace }),
@@ -568,11 +568,11 @@ lazy.setup({
         }),
         sources = cmp.config.sources({
           {name = 'nvim_lsp'},
-          {name = 'buffer'},
+          -- {name = 'buffer'},
           {name = 'path'},
           {name = 'cmdline'},
-          {name = 'luasnip'},
-        })
+          -- {name = 'luasnip'},
+        }, {{name = 'buffer'}})
       })
       -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline({ '/', '?' }, {
