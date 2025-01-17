@@ -88,8 +88,12 @@ in {
       xclip
       bpftrace
       nerd-fonts.bigblue-terminal
+      nerd-fonts.code-new-roman
+      nerd-fonts.caskaydia-mono
       nerd-fonts.comic-shanns-mono 
+      nerd-fonts.droid-sans-mono
       nerd-fonts.fira-code 
+      nerd-fonts.go-mono
       nerd-fonts.monofur
       nerd-fonts.open-dyslexic
       nerd-fonts.proggy-clean-tt
