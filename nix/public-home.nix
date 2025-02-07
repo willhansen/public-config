@@ -104,6 +104,7 @@ in {
       jsbeautifier # js autoformat
       linuxPackages.perf
       oxtools # 0x.tools
+      lnav
     ];
   };
   fonts.fontconfig.enable = true;
