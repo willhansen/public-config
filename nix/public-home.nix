@@ -105,6 +105,7 @@ in {
       linuxPackages.perf
       oxtools # 0x.tools
       lnav
+      hotspot
     ];
   };
   fonts.fontconfig.enable = true;
