@@ -114,6 +114,8 @@ in {
       oxtools # 0x.tools
       repgrep # ripgrep + replace in-place
       lnav
+      zellij
+      screen
     ];
   };
   fonts.fontconfig.enable = true;
