@@ -106,6 +106,7 @@ in {
       oxtools # 0x.tools
       lnav
       hotspot
+      zellij
     ];
   };
   fonts.fontconfig.enable = true;
@@ -132,6 +133,9 @@ in {
     };
   };
   programs = {
+    fish = {
+      enable = true;
+    };
     git = {
       enable = true;
       aliases = {
