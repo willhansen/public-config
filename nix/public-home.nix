@@ -86,12 +86,20 @@ in {
       graphviz
       xcolor # color picker
       xclip
-      comic-mono # TODO: get access to the font
       bpftrace
-      # font list: https://www.nerdfonts.com/font-downloads
-      #TODO: maybe only get specific fonts, because they are big
-      ( nerdfonts.override { fonts = [ "ComicShannsMono" "FiraCode" ]; }) 
-      # nerdfonts
+      nerd-fonts.bigblue-terminal
+      nerd-fonts.code-new-roman
+      nerd-fonts.caskaydia-mono
+      nerd-fonts.comic-shanns-mono 
+      nerd-fonts.droid-sans-mono
+      nerd-fonts.fira-code 
+      nerd-fonts.go-mono
+      nerd-fonts.monofur
+      nerd-fonts.open-dyslexic
+      nerd-fonts.proggy-clean-tt
+      nerd-fonts.tinos
+      nerd-fonts.ubuntu-mono
+      nerd-fonts.ubuntu-sans
       sqlite
       sqlitebrowser
       sqldiff
@@ -104,9 +112,11 @@ in {
       jsbeautifier # js autoformat
       linuxPackages.perf
       oxtools # 0x.tools
+      repgrep # ripgrep + replace in-place
       lnav
       hotspot
       zellij
+      screen
     ];
   };
   fonts.fontconfig.enable = true;
@@ -277,6 +287,12 @@ in {
             ln -sf "$SSH_AUTH_SOCK" "$known_ssh_auth_sock_path"
         	fi
         	export SSH_AUTH_SOCK="$known_ssh_auth_sock_path"
+
+          # search replace
+          rpl() {
+            # rg "$1" --files-with-matches -0 | xargs -0 sed -i "s/$1/$2/g"
+            fd --type file --exec sd "$1" "$2"
+          }
         	'';
     };
     bash = {

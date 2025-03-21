@@ -68,23 +68,23 @@ lazy.setup({
   },
   { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
 	{ "nvim-neotest/nvim-nio" },
-  { "rcarriga/nvim-dap-ui", 
-    requires = {"mfussenegger/nvim-dap","nvim-neotest/nvim-nio"} ,
-    init = function() 
+  -- { "rcarriga/nvim-dap-ui", 
+  --   requires = {"mfussenegger/nvim-dap","nvim-neotest/nvim-nio"} ,
+  --   init = function() 
 
-      local dap, dapui =require("dap"),require("dapui")
-      dap.listeners.after.event_initialized["dapui_config"]=function()
-        dapui.open()
-      end
-      dap.listeners.before.event_terminated["dapui_config"]=function()
-        dapui.close()
-      end
-      dap.listeners.before.event_exited["dapui_config"]=function()
-        dapui.close()
-      end
-    end,
+  --     local dap, dapui =require("dap"),require("dapui")
+  --     dap.listeners.after.event_initialized["dapui_config"]=function()
+  --       dapui.open()
+  --     end
+  --     dap.listeners.before.event_terminated["dapui_config"]=function()
+  --       dapui.close()
+  --     end
+  --     dap.listeners.before.event_exited["dapui_config"]=function()
+  --       dapui.close()
+  --     end
+  --   end,
 
-  },
+  -- },
   {
     -- "Skalyaeve/a-nvim-theme", -- neon theme
     -- "folke/tokyonight.nvim",
@@ -519,14 +519,14 @@ lazy.setup({
     'hrsh7th/nvim-cmp',
     dependencies = {
       'neovim/nvim-lspconfig',
-      'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
       'hrsh7th/cmp-nvim-lua',
-      'hrsh7th/cmp-nvim-lsp-document-symbol',
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
+      -- 'hrsh7th/cmp-nvim-lsp-document-symbol',
+      -- 'L3MON4D3/LuaSnip',
+      -- 'saadparwaiz1/cmp_luasnip',
       -- 'onsails/lspkind.nvim',
       -- 'hrsh7th/cmp-nvim-lsp-signature-help',
       -- 'lukas-reineke/cmp-under-comparator',
@@ -558,8 +558,8 @@ lazy.setup({
           end,
         },
         mapping = cmp.mapping.preset.insert({
-          -- ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-          -- ['<C-f>'] = cmp.mapping.scroll_docs(4),
+          ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-d>'] = cmp.mapping.scroll_docs(4),
           ['<C-Space>'] = cmp.mapping.complete(),
           ['<Tab>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Replace }),
           ['<S-Tab>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Replace }),
@@ -568,11 +568,11 @@ lazy.setup({
         }),
         sources = cmp.config.sources({
           {name = 'nvim_lsp'},
-          {name = 'buffer'},
+          -- {name = 'buffer'},
           {name = 'path'},
           {name = 'cmdline'},
-          {name = 'luasnip'},
-        })
+          -- {name = 'luasnip'},
+        }, {{name = 'buffer'}})
       })
       -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline({ '/', '?' }, {
@@ -599,8 +599,9 @@ lazy.setup({
   {
     'neovim/nvim-lspconfig',
     enabled = true,
-    config = function(_, opts)
-      require('lspconfig').pylsp.setup{
+    config = function(_, opts) 
+      require('lspconfig').ts_ls.setup {}
+      require('lspconfig').pylsp.setup {
         settings = {
           pylsp = {
             plugins = {
@@ -676,12 +677,12 @@ lazy.setup({
     lazy = false,
   },
 
-  {
-    -- Jump to end of syntax node on <tab> if not at end of line
-    enabled = false,
-    "boltlessengineer/smart-tab.nvim",
-    opts = {},
-  },
+  -- {
+  --   -- Jump to end of syntax node on <tab> if not at end of line
+  --   enabled = false,
+  --   "boltlessengineer/smart-tab.nvim",
+  --   opts = {},
+  -- },
   {
     "ray-x/lsp_signature.nvim",
     event = "VeryLazy",
@@ -710,12 +711,12 @@ lazy.setup({
       vim.opt.termguicolors = true
     end,
   },
-  {
-    -- show lsp errors under lines
-    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    opts = {},
-    enabled = false,
-  },
+  -- {
+  --   -- show lsp errors under lines
+  --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+  --   opts = {},
+  --   enabled = false,
+  -- },
   {
     -- highlight symbol under cursor
     "RRethy/vim-illuminate",
@@ -724,8 +725,9 @@ lazy.setup({
   { "nvim-tree/nvim-web-devicons"},
   {
     "mrcjkb/rustaceanvim",
-    version = '^4', -- Recommended
-    lazy = false, -- load on startup
+    version = '^5', -- Recommended
+    lazy = false, -- already lazy
+    ft = "rust",
     -- config = function(_, opts) 
     keys = { 
         { "<leader>e" , function() vim.cmd.RustLsp('expandMacro') end, desc = "Expand macros"}
@@ -802,6 +804,13 @@ lazy.setup({
         }
       }
     }
+  },
+  { "cordx56/rustowl", 
+    dependencies = { "neovim/nvim-lspconfig" },
+    config = function()
+      local lspconfig = require("lspconfig")
+      lspconfig.rustowlsp.setup({})
+    end,
   }
   -- end of plugins
 })
