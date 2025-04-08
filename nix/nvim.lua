@@ -725,7 +725,7 @@ lazy.setup({
   { "nvim-tree/nvim-web-devicons"},
   {
     "mrcjkb/rustaceanvim",
-    version = '^5', -- Recommended
+    version = '^6', -- Recommended
     lazy = false, -- already lazy
     ft = "rust",
     -- config = function(_, opts) 
