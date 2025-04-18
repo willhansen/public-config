@@ -117,6 +117,7 @@ in {
       hotspot
       zellij
       screen
+      uftrace
     ];
   };
   fonts.fontconfig.enable = true;
