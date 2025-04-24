@@ -212,6 +212,7 @@ return_code_string() {
 # ╰▶
 #╭᚜
 # 🙾
+# 🙾
 #   ██
 # ██
 # ◯ 🙼🙼 🙼🙼  
@@ -221,23 +222,27 @@ return_code_string() {
 #
 #   
 upper_left_decorator() {
-  echo -n "$(fg_color $PROFILE_ICON_BG "🮣")$(fg_color $PROFILE_ORANGE "  ▇▇")$(fg_color $PROFILE_ICON_BG "🮢")"
+  # echo -n "$(fg_color $PROFILE_ICON_BG "🮣")$(fg_color $PROFILE_ORANGE "  ▇▇")$(fg_color $PROFILE_ICON_BG "🮢")"
+  echo -n "$(fg_color $PROFILE_ORANGE "🙾 ")"
   # clear_formatting
 }
 # ◣ ◤
 # ◺ ◸ 
 # ❯   🮆🮆
 lower_left_decorator() {
-  echo -n "$(fg_color $PROFILE_ICON_BG "🮡")$(fg_color $PROFILE_ORANGE "🮆🮆")  $(fg_color $PROFILE_ICON_BG "🮠")$(fg_color $TEAL "🭨🭬")"
+  # echo -n "$(fg_color $PROFILE_ICON_BG "🮡")$(fg_color $PROFILE_ORANGE "🮆🮆")  $(fg_color $PROFILE_ICON_BG "🮠")$(fg_color $TEAL "🭨🭬")"
+  echo -n "$(fg_color $TEAL "🭨🭬")"
 }
 
-power_rangers() {
-  #bpryb
-  echo -n "$(fg_color $U_B "🯅")$(fg_color $U_M "🯈")$(fg_color $U_R "🯆")$(fg_color $U_Y "🯇")$(fg_color "#000000" "🯅")"
-}
+#power_rangers() {
+#  #bpryb
+#  echo -n "$(fg_color $U_B "🯅")$(fg_color $U_M "🯈")$(fg_color $U_R "🯆")$(fg_color $U_Y "🯇")$(fg_color "#000000" "🯅")"
+#}
 
 fancy_line_end() {
-  echo -n "$(fg_color \#442222 "꧁ ꧂  ") $(fg_color \#2178ff "𐁙 ") $(fg_color \#ff20bb " 𐙀 ") $(fg_color \#555555 " ៚ 𑜿 ") $(fg_color \#f0f0f0 "𐃆 𐼽 ꫝꫜ ") $(fg_color \#409040 "𐀢꩜ ") $(fg_color blue "𒓎   ") ꘐ   🮲🮳"
+  # echo -n "$(fg_color \#442222 "꧁ ꧂  ") $(fg_color \#2178ff "𐁙 ") $(fg_color \#ff20bb " 𐙀 ") $(fg_color \#555555 " ៚ 𑜿 ") $(fg_color \#f0f0f0 "𐃆 𐼽 ꫝꫜ ") $(fg_color \#409040 "𐀢꩜ ") $(fg_color blue "𒓎   ") ꘐ   🮲🮳"
+  echo -n " $(fg_color \#2178ff "🙼🙼")"
+  
 }
 
 # $(fg_color \#402020 " 𑿛  𑿜  ") $(fg_color \#000000 " 𑿭 𑿿  ") 
