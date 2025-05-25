@@ -806,6 +806,7 @@ lazy.setup({
     }
   },
   { "cordx56/rustowl", 
+    enabled = false,
     dependencies = { "neovim/nvim-lspconfig" },
     config = function()
       local lspconfig = require("lspconfig")
