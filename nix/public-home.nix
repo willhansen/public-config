@@ -118,6 +118,7 @@ in {
       zellij
       screen
       uftrace
+      http-server
     ];
   };
   fonts.fontconfig.enable = true;
