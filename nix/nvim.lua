@@ -212,7 +212,7 @@ lazy.setup({
     end,
   },
   {
-    'nvim-telescope/telescope.nvim', tag = '0.1.6',
+    'nvim-telescope/telescope.nvim', tag = '0.1.8',
     dependencies = { 
       'nvim-lua/plenary.nvim',
       { 
@@ -725,6 +725,7 @@ lazy.setup({
   { "nvim-tree/nvim-web-devicons"},
   {
     "mrcjkb/rustaceanvim",
+    enabled = true,
     version = '^6', -- Recommended
     lazy = false, -- already lazy
     ft = "rust",
@@ -804,15 +805,15 @@ lazy.setup({
         }
       }
     }
-  },
-  { "cordx56/rustowl", 
-    enabled = false,
-    dependencies = { "neovim/nvim-lspconfig" },
-    config = function()
-      local lspconfig = require("lspconfig")
-      lspconfig.rustowlsp.setup({})
-    end,
   }
+  -- { "cordx56/rustowl", 
+  --   enabled = false,
+  --   dependencies = { "neovim/nvim-lspconfig" },
+  --   config = function()
+  --     local lspconfig = require("lspconfig")
+  --     lspconfig.rustowlsp.setup({})
+  --   end,
+  -- }
   -- end of plugins
 })
 
@@ -964,13 +965,13 @@ function autocommands()
   })
 
   -- autoformat on save
-  vim.api.nvim_create_autocmd('BufWritePre', {
-    -- buffer = vim.fn.bufnr(),
-    group = augroup("autoformat "),
-    -- TODO: other file formats, like lua and python
-    pattern = { "rust"};--, "python" };
-    callback = function() vim.lsp.buf.format({ timeout_ms = 3000 }) end
-  })
+  -- vim.api.nvim_create_autocmd('BufWritePre', {
+  --   -- buffer = vim.fn.bufnr(),
+  --   group = augroup("autoformat "),
+  --   -- TODO: other file formats, like lua and python
+  --   pattern = { "rust"};--, "python" };
+  --   callback = function() vim.lsp.buf.format({ timeout_ms = 3000 }) end
+  -- })
 
   -- Check if we need to reload the file when it changed
   -- From LazyVim: https://www.lazyvim.org/configuration/general
